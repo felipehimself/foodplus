@@ -1,10 +1,16 @@
 import Image from 'next/image';
 import Button from './Button';
-import img from './..//public/image.jpeg'
+import img from './..//public/image.jpeg';
 
-const Summary = () => {
+const Summary = ({ showSummary }: { showSummary: boolean }) => {
   return (
-    <div className='w-72 px-4 h-screen bg-zinc-50 flex flex-col gap-3'>
+    <div
+      className={`text-sm fixed transition-all ${
+        showSummary ? 'left-0' : '-left-full'
+      } w-72 px-4 pb-4 h-screen bg-zinc-50 flex flex-col gap-3 md:static`}
+    >
+
+      
       <div>
         <Image
           width={136}
@@ -23,7 +29,13 @@ const Summary = () => {
       <hr />
       <div className='flex flex-col  items-center gap-2 w-full'>
         <p className='text-center font-semibold'>TOTAL $6.90</p>
-        <Button title='FINISH' className='w-full' />
+        <Button
+          title='FINISH'
+          className='w-full bg-orange-500 hover:bg-orange-600 text-white'
+        />
+      </div>
+      <div>
+        <Button title='CANCEL' className='w-full border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white' />
       </div>
     </div>
   );

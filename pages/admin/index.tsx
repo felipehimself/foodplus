@@ -6,7 +6,7 @@ const Admin = () => {
       <div className='text-lg mt-4 text-center p-2 mx-auto w-full flex justify-center'>
         <RiAdminFill className='fill-slate-600' size={36} />
       </div>
-      <form className='mx-auto md:w-6/12 flex flex-col gap-4 mt-6'>
+      <form className='mx-auto md:w-4/12 flex flex-col gap-4 mt-6'>
         <h2 className=' font-semibold text-center text-slate-600'>
           Include Product • Admin Panel 
         </h2>
@@ -32,7 +32,7 @@ const Admin = () => {
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
             aria-label='Default select example'
           >
-            <option selected>Sauce</option>
+            <option>Sauce</option>
             <option value='1'>Veggie</option>
             <option value='2'>Cheese</option>
             <option value='2'>Crunch</option>

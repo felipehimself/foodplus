@@ -3,11 +3,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useSession } from 'next-auth/react';
-import { FaCarrot, FaCheese, FaSeedling } from 'react-icons/fa';
-import { FaWineBottle } from 'react-icons/fa';
-import { RiAdminFill } from 'react-icons/ri';
-import { MdArrowBackIos } from 'react-icons/md';
-import { FaAppleAlt } from 'react-icons/fa';
+
+import {
+  FaCarrot,
+  FaCheese,
+  FaSeedling,
+  FaWineBottle,
+  FaAppleAlt,
+} from 'react-icons/fa';
+import { RiAdminFill, RiUserFill } from 'react-icons/ri';
+import { IoMenuOutline } from 'react-icons/io5';
 
 const menuItems = [
   { item: 'sauces', icon: <FaWineBottle size={18} />, path: 'sauces' },
@@ -17,7 +22,11 @@ const menuItems = [
   { item: 'extras', icon: <FaAppleAlt size={18} />, path: 'extras' },
 ];
 
-const Sidebar = () => {
+interface IProps {
+  setShowSummary: Function;
+}
+
+const Sidebar = ({ setShowSummary }: IProps) => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -28,13 +37,11 @@ const Sidebar = () => {
   return (
     <nav className='bg-gradient-to-b from-orange-600 to-orange-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between py-8 gap-6'>
       <div className='flex flex-col gap-12'>
-        <button
-          onClick={() => cancelOrder()}
-          className='flex flex-col justify-center items-center uppercase gap-2 '
-        >
-          <MdArrowBackIos size={20} />
-          <span className='text-xs'>Cancel</span>
-        </button>
+        <div className='flex justify-center h-[26px]'>
+          <button onClick={() => setShowSummary(true)} className=' md:hidden'>
+            <IoMenuOutline size={26} />
+          </button>
+        </div>
         <ul className='flex flex-col gap-6'>
           {menuItems.map((menuItem, ind) => (
             <li key={menuItem.item} className='relative overflow-hidden'>
@@ -59,7 +66,7 @@ const Sidebar = () => {
                 border-l-0
                 transition-all
                 ${
-                  router.pathname == '/' + menuItem.path
+                  router.pathname.includes(menuItem.path)
                     ? 'opacity-100'
                     : 'opacity-0'
                 }
@@ -70,9 +77,13 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className='mx-auto'>
-        {session?.user.role === 'admin' && (
+        {session?.user.role === 'admin' ? (
           <Link href='/admin'>
             <RiAdminFill size={24} />
+          </Link>
+        ) : (
+          <Link href='/account'>
+            <RiUserFill size={24} />
           </Link>
         )}
       </div>
