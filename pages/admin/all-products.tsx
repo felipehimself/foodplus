@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
-import AdminContainer from '../../components/Admin/AdminContainer';
-import AdminHeading from '../../components/Admin/AdminHeading';
+import AdminContainer from '../../components/AdminContainer';
+import AdminHeading from '../../components/AdminHeading';
 import client from '../../lib/prismadb';
 import { IProductFull } from '../../types/Product';
 import { MdEditNote, MdDelete } from 'react-icons/md';

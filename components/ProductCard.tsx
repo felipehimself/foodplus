@@ -1,20 +1,39 @@
 import Image from 'next/image';
 import { IProductFull } from '../types/Product';
+import { useAppDispatch } from '../store/store';
+import { addToCart } from './../slices/cartSlice';
+import toast, { Toaster } from 'react-hot-toast';
 
 const ProductCard = ({ id, price, imageUrl, name }: IProductFull) => {
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = (
+    id: string,
+    price: number,
+    name: string,
+    
+  ) => {
+    dispatch(addToCart({ id, price, name }));
+    toast.success('Added to cart!')
+  };
+
   return (
-    <button
-      className='relative flex items-center justify-between w-52 h-40 bg-white rounded-md'
-      key={id}
-    >
-      <span className='text-xs flex items-center justify-center rounded-full bg-neutral-700 text-white w-12 h-12 absolute -top-5 right-3'>
-        $ {price}
-      </span>
-      <div>
-        <Image src={imageUrl} alt={name} width={100} height={100} />
-      </div>
-      <p className='flex-1 text-lg text-slate-700'>{name}</p>
-    </button>
+    <>
+      <Toaster position='top-right' reverseOrder={false} />
+      <button
+        onClick={() => handleAddToCart(id, price, name, )}
+        className='relative flex items-center justify-between w-52 h-40 bg-white rounded-md'
+        key={id}
+      >
+        <span className='text-xs flex items-center justify-center rounded-full bg-neutral-700 text-white w-10 h-10 absolute -top-5 right-2'>
+          $ {price}
+        </span>
+        <div>
+          <Image src={imageUrl} alt={name} width={100} height={100} />
+        </div>
+        <p className='flex-1 text-lg text-slate-700'>{name}</p>
+      </button>
+    </>
   );
 };
 export default ProductCard;

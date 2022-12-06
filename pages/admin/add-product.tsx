@@ -6,8 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { productValidation } from '../../lib/yup';
 import { IImage, IProductOption } from '../../types/Product';
 import axios from 'axios';
-import AdminHeading from '../../components/Admin/AdminHeading';
-import AdminContainer from '../../components/Admin/AdminContainer';
+import AdminHeading from '../../components/AdminHeading';
+import AdminContainer from '../../components/AdminContainer';
 import client from '../../lib/prismadb';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -47,12 +47,12 @@ const AddProduct = ({ productList }: { productList: IProductOption[] }) => {
         imageUrl: uploadRes.data.secure_url,
         imageId: uploadRes.data.public_id,
       });
-      toast.success('Image uploaded!')
+      toast.success('Image uploaded!');
 
       setIsPostingImg(false);
     } catch (error) {
       setIsPostingImg(false);
-      toast.error('Something went wrong!')
+      toast.error('Something went wrong!');
 
       console.log(error);
     }
@@ -81,10 +81,10 @@ const AddProduct = ({ productList }: { productList: IProductOption[] }) => {
         fileRef.current.value = '';
       }
       setIsPostingImg(false);
-      toast.success('Product saved!')
+      toast.success('Product saved!');
     } catch (error) {
       setIsPostingImg(false);
-      toast.error('Something went wrong!')
+      toast.error('Something went wrong!');
 
       console.log(error);
     }
@@ -92,10 +92,7 @@ const AddProduct = ({ productList }: { productList: IProductOption[] }) => {
 
   return (
     <AdminContainer>
-      <Toaster
-  position="top-center"
-  reverseOrder={false}
-/>
+      <Toaster position='top-right' reverseOrder={false} />
       <AdminHeading title='Add Product' />
       <form onSubmit={handleSubmit(onSubmit)} className='px-2'>
         <fieldset
