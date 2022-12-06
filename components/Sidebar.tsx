@@ -76,17 +76,22 @@ const Sidebar = ({ setShowSummary }: IProps) => {
           ))}
         </ul>
       </div>
-      <div className='mx-auto'>
-        {session?.user.role === 'admin' ? (
-          <Link href='/admin'>
-            <RiAdminFill size={24} />
-          </Link>
-        ) : (
-          <Link href='/account'>
-            <RiUserFill size={24} />
-          </Link>
-        )}
-      </div>
+
+      {status !== 'loading' && (
+        <div className='mx-auto'>
+          {session?.user.role === 'admin' ? (
+            <Link href='/admin' className='flex flex-col items-center'>
+              <RiAdminFill size={24} />
+              <span className='text-xs'>Admin</span>
+            </Link>
+          ) : (
+            <Link href='/account' className='flex flex-col items-center'>
+              <RiUserFill size={24} />
+              <span className='text-xs'>Account</span>
+            </Link>
+          )}
+        </div>
+      )}
     </nav>
   );
 };

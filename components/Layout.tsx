@@ -8,12 +8,12 @@ import { useState } from 'react';
 const inter = Inter();
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
   const [showSummary, setShowSummary] = useState(false);
+  const router = useRouter();
 
-  const isSummaryNeeded = ![router.pathname].includes('/admin') && !(router.pathname === '/');
+  const isSummaryNeeded = !router.pathname.includes('/admin') && !(router.pathname === '/');
   
-
+  
   return (
     <main className={inter.className}>
       <Sidebar setShowSummary={setShowSummary}/>

@@ -27,6 +27,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -36,6 +37,8 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
+
+  @@index([userId])
 }
 
 model User {
@@ -55,4 +58,49 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Product {
+    id            Int    @id @default(autoincrement())
+    name          String    @unique
+}
+
+model Sauce {
+    id            String    @id @default(cuid())
+    name          String    @unique
+    price         Float
+    imageUrl         String
+    imageId       String    @unique
+}
+
+model Veggie {
+    id            String    @id @default(cuid())
+    name          String    @unique
+    price         Float
+    imageUrl         String
+    imageId       String    @unique
+}
+
+model Cheese {
+    id            String    @id @default(cuid())
+    name          String    @unique
+    price         Float
+    imageUrl         String
+    imageId       String    @unique
+}
+
+model Crunch {
+    id            String    @id @default(cuid())
+    name          String    @unique
+    price         Float
+    imageUrl         String
+    imageId       String    @unique
+}
+
+model Extra {
+    id            String    @id @default(cuid())
+    name          String    @unique
+    price         Float
+    imageUrl         String
+    imageId       String    @unique
 }
