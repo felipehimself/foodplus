@@ -4,14 +4,14 @@ import { IProduct } from '../../types/Product';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { productValidation } from '../../lib/yup';
-import { IImage, IProductOption } from '../../types/Product';
+import { IImage, ICategory } from '../../types/Product';
 import axios from 'axios';
 import AdminHeading from '../../components/AdminHeading';
 import AdminContainer from '../../components/AdminContainer';
 import client from '../../lib/prismadb';
 import toast, { Toaster } from 'react-hot-toast';
 
-const AddProduct = ({ productList }: { productList: IProductOption[] }) => {
+const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const [image, setImage] = useState<IImage | null>(null);
   const [isPostingImg, setIsPostingImg] = useState(false);
   const [isPostingProd, setIsPostingProd] = useState(false);
@@ -104,8 +104,8 @@ const AddProduct = ({ productList }: { productList: IProductOption[] }) => {
               Type
             </label>
             <select
-              {...register('type')}
-              name='type'
+              {...register('category')}
+              name='category'
               id='type'
               className='
               capitalize 
@@ -244,7 +244,7 @@ const AddProduct = ({ productList }: { productList: IProductOption[] }) => {
 export default AddProduct;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const productList = await client.product.findMany();
+  const productList = await client.category.findMany();
 
   return {
     props: {

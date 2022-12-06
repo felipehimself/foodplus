@@ -1,31 +1,26 @@
 import Image from 'next/image';
-import { IProductFull } from '../types/Product';
+import { IProduct } from '../types/Product';
 import { useAppDispatch } from '../store/store';
-import { addToCart } from './../slices/cartSlice';
+import { addToCart } from '../features/cartSlice';
 import toast, { Toaster } from 'react-hot-toast';
 
-const ProductCard = ({ id, price, imageUrl, name }: IProductFull) => {
+const ProductCard = ({ id, price, imageUrl, name, productId, category }: IProduct) => {
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = (
-    id: string,
-    price: number,
-    name: string,
-    
-  ) => {
-    dispatch(addToCart({ id, price, name }));
-    toast.success('Added to cart!')
+  const handleAddToCart = (id: string, price: number, name: string, productId:string, category:string) => {
+    dispatch(addToCart({ id, price, name, productId, category }));
+    toast.success('Added to cart!');
   };
 
   return (
     <>
       <Toaster position='top-right' reverseOrder={false} />
       <button
-        onClick={() => handleAddToCart(id, price, name, )}
-        className='relative flex items-center justify-between w-52 h-40 bg-white rounded-md'
+        onClick={() => handleAddToCart(id, price, name, productId, category)}
+        className='shadow-md hover:shadow-lg transition-all relative flex items-center justify-between w-52 h-40 bg-white rounded-md'
         key={id}
       >
-        <span className='text-xs flex items-center justify-center rounded-full bg-neutral-700 text-white w-10 h-10 absolute -top-5 right-2'>
+        <span className='text-xs flex items-center justify-center rounded-full bg-neutral-700 text-white w-8 h-8 absolute -top-5 right-2'>
           $ {price}
         </span>
         <div>

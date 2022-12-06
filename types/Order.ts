@@ -1,6 +1,6 @@
-import { IProductFull } from './Product';
+import { IProduct } from './Product';
 
-export interface IOrder extends IProductFull {
+export interface IOrder extends IProduct {
   qty: number;
 }
 

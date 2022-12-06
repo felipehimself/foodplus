@@ -5,9 +5,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { type, name, price, imageId, imageUrl } = req.body;
+  const { name, price, imageId, imageUrl, category } = req.body;
 
-  if (!type || !name || !price || !imageId || !imageUrl ) {
+  if (!category || !name || !price || !imageId || !imageUrl ) {
     res.status(406).json({ message: 'Not enough data provided' });
     return;
   }
@@ -15,36 +15,7 @@ export default async function handler(
   if (req.method === 'POST') {
     
     try {
-
-      const data = {
-        data: {
-          name: name,
-          price: price,
-          imageUrl: imageUrl,
-          imageId: imageId,
-        },
-      };
-      switch (type.toLowerCase()) {
-        case 'sauce':
-          await client.sauce.create(data);
-          break;
-
-        case 'veggie':
-          await client.veggie.create(data);
-          break;
-
-        case 'cheese':
-          await client.cheese.create(data);
-          break;
-
-        case 'crunch':
-          await client.crunch.create(data);
-          break;
-
-        case 'extra':
-          await client.extra.create(data);
-          break;
-      }
+      await client.product.create({data: {name, price, imageId, imageUrl, category}})
       res.status(201).json({ message: 'created' });
     } catch (error) {
       console.log(error);

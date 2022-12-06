@@ -1,10 +1,10 @@
 import { GetServerSideProps } from 'next';
-import { IProductFull } from '../../types/Product';
+import { IProduct } from '../../types/Product';
 import ProductCard from '../../components/ProductCard';
 import ProductContainer from '../../components/ProductContainer';
 import client from '../../lib/prismadb';
 
-const Veggie = ({ veggies }: { veggies: IProductFull[] }) => {
+const Veggie = ({ veggies }: { veggies: IProduct[] }) => {
   return (
     <ProductContainer>
       {veggies.map((veggie) => (
@@ -16,7 +16,11 @@ const Veggie = ({ veggies }: { veggies: IProductFull[] }) => {
 export default Veggie;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const veggies = await client.veggie.findMany();
+  const veggies = await client.product.findMany({
+    where: {
+      category: 'veggie',
+    },
+  });
 
   return {
     props: {

@@ -2,14 +2,14 @@ import { GetServerSideProps } from 'next';
 import AdminContainer from '../../components/AdminContainer';
 import AdminHeading from '../../components/AdminHeading';
 import client from '../../lib/prismadb';
-import { IProductFull } from '../../types/Product';
+import { IProduct } from '../../types/Product';
 import { MdEditNote, MdDelete } from 'react-icons/md';
 import Image from 'next/image';
 
-const AllProducts = ({ products }: { products: IProductFull[] }) => {
+const AllProducts = ({ products }: { products: IProduct[] }) => {
   const header = [
     'Product Id',
-    'Type',
+    'Category',
     'Name',
     'Price',
     'Image ID',
@@ -49,7 +49,7 @@ const AllProducts = ({ products }: { products: IProductFull[] }) => {
                         {product.id}
                       </td>
                       <td className='px-6 py-4 whitespace-nowrap text-xs font-medium text-gray-900'>
-                        {product.type}
+                        {product.category}
                       </td>
                       <td className='px-6 py-4 whitespace-nowrap text-xs font-medium text-gray-900'>
                         {product.name}
@@ -98,18 +98,8 @@ const AllProducts = ({ products }: { products: IProductFull[] }) => {
 export default AllProducts;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const products = await client.$queryRaw`
-    SELECT 'sauce' AS type , Sauce.* FROM Sauce
-    UNION
-    SELECT 'veggie' AS type , Veggie.* FROM Veggie
-    UNION
-    SELECT 'cheese' AS type , Cheese.* FROM Cheese
-    UNION
-    SELECT 'crunch' AS type , Crunch.* FROM Crunch
-    UNION
-    SELECT 'extra' AS type , Extra.* FROM Extra
-  `;
-
+  const products = await client.product.findMany()
+    
   return {
     props: {
       products,

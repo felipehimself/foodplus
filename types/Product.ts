@@ -1,7 +1,11 @@
 export interface IProduct {
-  type: string;
+  id: string;
+  productId: string;
+  category: string;
   name: string;
   price: number;
+  imageUrl: string;
+  imageId: string;
 }
 
 export interface IImage {
@@ -9,11 +13,11 @@ export interface IImage {
   imageId: string;
 }
 
-export interface IProductOption {
+export interface ICategory {
   id: number;
   name: string;
 }
 
-export interface IProductFull extends IProduct, IImage {
-  id: string;
-}
+// export interface IProductFull extends IProduct, IImage {
+//   id: string;
+// }

@@ -10,6 +10,7 @@ import {
   FaSeedling,
   FaWineBottle,
   FaAppleAlt,
+  FaShoppingCart
 } from 'react-icons/fa';
 import { RiAdminFill, RiUserFill } from 'react-icons/ri';
 import { IoMenuOutline } from 'react-icons/io5';
@@ -23,10 +24,10 @@ const menuItems = [
 ];
 
 interface IProps {
-  setShowSummary: Function;
+  setShowCart: Function;
 }
 
-const Sidebar = ({ setShowSummary }: IProps) => {
+const Sidebar = ({ setShowCart }: IProps) => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -38,8 +39,8 @@ const Sidebar = ({ setShowSummary }: IProps) => {
     <nav className='bg-gradient-to-b from-orange-600 to-orange-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between py-8 gap-6'>
       <div className='flex flex-col gap-12'>
         <div className='flex justify-center h-[26px]'>
-          <button onClick={() => setShowSummary(true)} className=' md:hidden'>
-            <IoMenuOutline size={26} />
+          <button onClick={() => setShowCart(true)} className=' md:hidden'>
+            <FaShoppingCart size={22} />
           </button>
         </div>
         <ul className='flex flex-col gap-6'>
