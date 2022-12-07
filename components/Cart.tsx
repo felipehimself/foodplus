@@ -33,7 +33,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
       <div
         className={`text-sm fixed z-50 transition-all ${
           showCart ? 'left-0' : '-left-full'
-        } w-72 px-4 pb-4 h-screen bg-zinc-50 flex flex-col gap-1 shadow-lg md:static md:shadow-none`}
+        } w-72 px-4 pb-4 h-screen bg-zinc-50 flex justify-between flex-col gap-1 shadow-lg md:static md:shadow-none`}
       >
         <div>
           <Image
@@ -68,7 +68,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
                       className='group'
                     >
                       <MdClose
-                        className='transition-all fill-red-600 group-hover:rotate-90 group-hover:fill-red-800'
+                        className='transition-all fill-red-600 group-hover:fill-red-800'
                         size={18}
                       />
                     </button>
