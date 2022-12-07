@@ -12,10 +12,8 @@ import client from '../../lib/prismadb';
 import toast, { Toaster } from 'react-hot-toast';
 
 const AddProduct = ({ productList }: { productList: ICategory[] }) => {
-  const [image, setImage] = useState<IImage | null>(null);
-  const [isPostingImg, setIsPostingImg] = useState(false);
   const [isPostingProd, setIsPostingProd] = useState(false);
-
+  const [fileError, setFileError] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -28,64 +26,46 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
     resolver: yupResolver(productValidation),
   });
 
-  const handleCreate = async (e: ChangeEvent<HTMLInputElement>) => {
-    setIsPostingImg(true);
-    setImage(null);
-    const file = e.target.files![0];
-    const data = new FormData();
+  const imgFormData = new FormData();
 
-    data.append('file', file);
-    data.append('upload_preset', 'foodplus');
+  const handleGetImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    imgFormData.append('file', file);
+    imgFormData.append('upload_preset', 'foodplus');
+  };
+
+  const onSubmit = async (data: IProduct) => {
+    setFileError(false);
+    clearErrors();
+
+    if(fileRef.current?.files?.length === 0)  {
+      setFileError(true)
+      return
+    };
+    clearErrors();
+    setIsPostingProd(true);
 
     try {
       const uploadRes = await axios.post(
         'https://api.cloudinary.com/v1_1/dggwpfsnj/image/upload',
-        data
+        imgFormData
       );
 
-      setImage({
-        imageUrl: uploadRes.data.secure_url,
-        imageId: uploadRes.data.public_id,
-      });
-      toast.success('Image uploaded!');
-
-      setIsPostingImg(false);
-    } catch (error) {
-      setIsPostingImg(false);
-      toast.error('Something went wrong!');
-
-      console.log(error);
-    }
-  };
-
-  const checkError = (): boolean => {
-    return Object.keys(errors).length > 0;
-  };
-
-  const onSubmit = async (data: IProduct) => {
-    setIsPostingProd(true);
-    clearErrors();
-
-    try {
       const product = {
         ...data,
-        imageId: image?.imageId,
-        imageUrl: image?.imageUrl,
+        imageId: uploadRes.data.public_id,
+        imageUrl: uploadRes.data.secure_url,
       };
 
       await axios.post('/api/admin', product);
       setIsPostingProd(false);
       reset();
-      setImage(null);
-      if (fileRef.current) {
-        fileRef.current.value = '';
-      }
-      setIsPostingImg(false);
+      
+      if (fileRef.current) fileRef.current.value = '';
+      
       toast.success('Product saved!');
     } catch (error) {
-      setIsPostingImg(false);
       toast.error('Something went wrong!');
-
       console.log(error);
     }
   };
@@ -96,18 +76,19 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
       <AdminHeading title='Add Product' />
       <form onSubmit={handleSubmit(onSubmit)} className='px-2'>
         <fieldset
-          disabled={isPostingImg || isPostingProd}
+          disabled={isPostingProd}
           className='mx-auto lg:w-4/12 flex flex-col gap-4 '
         >
           <div className='flex flex-col gap-1 text-sm'>
             <label htmlFor='type' className='text-slate-600'>
-              Type
+              Category
             </label>
             <select
               {...register('category')}
               name='category'
               id='type'
-              className='
+              className={`
+              ${errors.category && 'border-red-500'}
               capitalize 
               form-select
               appearance-none
@@ -124,7 +105,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               transition
               ease-in-out
               m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`}
               aria-label='Default select example'
             >
               {productList.map(({ id, name }) => (
@@ -145,7 +126,8 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               {...register('name')}
               type='text'
               name='name'
-              className='
+              className={`
+                ${errors.name && 'border-red-500'}
                 form-control
                 block
                 w-full
@@ -161,7 +143,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
                 ease-in-out
                 m-0
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                '
+                `}
               id='name'
               placeholder=''
             />
@@ -177,7 +159,8 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               {...register('price')}
               type='number'
               name='price'
-              className='
+              className={`
+              ${errors.price && 'border-red-500'}
                 form-control
                 block
                 w-full
@@ -193,7 +176,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
                 ease-in-out
                 m-0
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                '
+                `}
               id='price'
               placeholder=''
             />
@@ -206,9 +189,10 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               Image
             </label>
             <input
-              onChange={handleCreate}
+              onChange={handleGetImage}
               ref={fileRef}
-              className='form-control
+              className={`form-control
+              ${fileError && 'border-red-500'}
               block
               w-full
               px-3
@@ -222,14 +206,12 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               transition
               ease-in-out
               m-0
-             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`}
               type='file'
               id='image'
             />
           </div>
-          <small className='text-center text-sm text-red-500 h-[20px]'>
-            {checkError() && '* All fields are required'}
-          </small>
+          
           <button
             type='submit'
             className='disabled:bg-slate-500 disabled:text-white inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
