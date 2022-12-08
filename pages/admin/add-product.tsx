@@ -89,24 +89,14 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               id='type'
               className={`
               ${errors.category && 'border-red-500'}
-              capitalize 
-              form-select
-              appearance-none
-              block
-              w-full
-              px-3
-              py-1.5
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding bg-no-repeat
-              border border-solid border-gray-300
-              rounded
-              transition
-              ease-in-out
-              m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`}
-              aria-label='Default select example'
+              capitalize
+              p-2
+              rounded-md
+              border
+              border-gray-400
+              focus:outline-none
+                focus:border-blue-800`}
+              aria-label='Select category'
             >
               {productList.map(({ id, name }) => (
                 <option key={id} value={name}>
@@ -126,26 +116,15 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               {...register('name')}
               type='text'
               name='name'
-              className={`
-                ${errors.name && 'border-red-500'}
-                form-control
-                block
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                bg-white bg-clip-padding
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                m-0
-                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+              className={`${errors.name && 'border-red-500'}
+                p-2
+                rounded-md
+                border
+                border-gray-400
+                focus:outline-none
+                focus:border-blue-800
                 `}
               id='name'
-              placeholder=''
             />
           </div>
           <div className='flex flex-col gap-1 text-sm'>
@@ -161,24 +140,14 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               name='price'
               className={`
               ${errors.price && 'border-red-500'}
-                form-control
-                block
-                w-full
-                px-3
-                py-1.5
-                text-base
-                font-normal
-                text-gray-700
-                bg-white bg-clip-padding
-                border border-solid border-gray-300
-                rounded
-                transition
-                ease-in-out
-                m-0
-                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                `}
+              p-2
+              rounded-md
+              border
+              border-gray-400
+              focus:outline-none
+                focus:border-blue-800
+              `}
               id='price'
-              placeholder=''
             />
           </div>
           <div className='flex flex-col gap-1 text-sm'>
@@ -191,22 +160,10 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
             <input
               onChange={handleGetImage}
               ref={fileRef}
-              className={`form-control
-              ${fileError && 'border-red-500'}
-              block
-              w-full
-              px-3
-              py-1.5
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding
-              border border-solid border-gray-300
-              rounded
-              transition
-              ease-in-out
-              m-0
-             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`}
+              className={`${fileError && 'border-red-500'} p-2 rounded-md border border-gray-400
+              m-0 focus:outline-none
+              focus:border-blue-800
+             `}
               type='file'
               id='image'
             />

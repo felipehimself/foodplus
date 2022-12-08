@@ -1,5 +1,5 @@
 import AdminContainer from '../../components/AdminContainer';
-import AdminHeading from '../../components/Admin/AdminHeading';
+import AdminHeading from '../../components/AdminHeading';
 
 const AllProducts = () => {
   return (
