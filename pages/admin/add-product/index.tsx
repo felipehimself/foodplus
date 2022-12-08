@@ -15,6 +15,7 @@ import { MdClose } from 'react-icons/md';
 
 const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const [isPostingProd, setIsPostingProd] = useState(false);
+  const [formData, setFormData] = useState<FormData|null>(null);
   const [img, setImg] = useState<string | null>(null);
   const [fileError, setFileError] = useState(false);
 
@@ -30,13 +31,15 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
     resolver: yupResolver(productValidation),
   });
 
-  const imgFormData = new FormData();
-
+  
   const handleGetImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const imgFormData = new FormData();
     const file = e.target.files![0];
     imgFormData.append('file', file);
     imgFormData.append('upload_preset', 'foodplus');
+    setFormData(imgFormData)
     setImg(URL.createObjectURL(file));
+
   };
 
   const handleDeleteImg = () => {
@@ -46,19 +49,19 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
 
   const onSubmit = async (data: IProduct) => {
     setFileError(false);
-    clearErrors();
 
     if (fileRef.current?.files?.length === 0) {
       setFileError(true);
       return;
     }
+
     clearErrors();
     setIsPostingProd(true);
 
     try {
       const uploadRes = await axios.post(
         'https://api.cloudinary.com/v1_1/dggwpfsnj/image/upload',
-        imgFormData
+        formData
       );
 
       const product = {
@@ -71,13 +74,16 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
       handleDeleteImg()
       reset();
       setIsPostingProd(false);
+      setFormData(null)
       toast.success('Product saved!');
     } catch (error) {
+      setIsPostingProd(false);
+
       toast.error('Something went wrong!');
       console.log(error);
     }
   };
-
+  
   return (
     <AdminContainer>
       <Toaster position='top-right' reverseOrder={false} />
@@ -96,14 +102,14 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               name='category'
               id='type'
               className={`
-              ${errors.category && 'border-red-500'}
+              ${errors.category ? 'border-red-500':'border-gray-400'}
               capitalize
               p-2
               rounded-md
               border
-              border-gray-400
               focus:outline-none
-                focus:border-blue-800`}
+              `
+              }
               aria-label='Select category'
             >
               {productList.map(({ id, name }) => (
@@ -124,13 +130,12 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               {...register('name')}
               type='text'
               name='name'
-              className={`${errors.name && 'border-red-500'}
+              className={`
+              ${errors.name ? 'border-red-500':'border-gray-400'}
                 p-2
                 rounded-md
                 border
-                border-gray-400
                 focus:outline-none
-                focus:border-blue-800
                 `}
               id='name'
             />
@@ -149,13 +154,11 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               type='number'
               name='price'
               className={`
-              ${errors.price && 'border-red-500'}
+              ${errors.price ? 'border-red-500':'border-gray-400'}
               p-2
               rounded-md
               border
-              border-gray-400
               focus:outline-none
-                focus:border-blue-800
               `}
               id='price'
             />
@@ -170,11 +173,11 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
             <input
               onChange={handleGetImage}
               ref={fileRef}
-              className={`${
-                fileError && 'border-red-500'
-              } p-2 rounded-md border border-gray-400
-              m-0 focus:outline-none
-              focus:border-blue-800
+              className={`${fileError ? 'border-red-500':'border-gray-400'}
+              p-2 rounded-md 
+              border
+              m-0
+              focus:outline-none
              `}
               type='file'
               id='image'
