@@ -20,7 +20,7 @@ const ProductCard = ({ id, price, imageUrl, name, productId, category }: IProduc
         className='shadow-md hover:shadow-lg transition-all relative flex items-center justify-between w-52 h-40 bg-white rounded-md'
         key={id}
       >
-        <span className='text-xs flex items-center justify-center rounded-full bg-neutral-700 text-white w-8 h-8 absolute -top-5 right-2'>
+        <span className='text-[10px] flex items-center justify-center rounded-full bg-neutral-700 text-white w-9 h-9 absolute -top-5 right-2'>
           $ {price}
         </span>
         <div>
