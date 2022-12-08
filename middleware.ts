@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 
 export default withAuth(
   function middleware(req: NextRequest) {
-    return NextResponse.rewrite(new URL('/admin', req.url));
+    return NextResponse.next();
   },
 
   {
