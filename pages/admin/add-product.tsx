@@ -4,16 +4,20 @@ import { IProduct } from '../../types/Product';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { productValidation } from '../../lib/yup';
-import { IImage, ICategory } from '../../types/Product';
+import { ICategory } from '../../types/Product';
 import axios from 'axios';
 import AdminHeading from '../../components/AdminHeading';
 import AdminContainer from '../../components/AdminContainer';
 import client from '../../lib/prismadb';
 import toast, { Toaster } from 'react-hot-toast';
+import Image from 'next/image';
+import { MdClose } from 'react-icons/md';
 
 const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const [isPostingProd, setIsPostingProd] = useState(false);
-  const [fileError, setFileError] = useState(false)
+  const [img, setImg] = useState<string | null>(null);
+  const [fileError, setFileError] = useState(false);
+
   const fileRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -32,16 +36,22 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
     const file = e.target.files![0];
     imgFormData.append('file', file);
     imgFormData.append('upload_preset', 'foodplus');
+    setImg(URL.createObjectURL(file));
   };
+
+  const handleDeleteImg = () => {
+    setImg(null);
+    if (fileRef.current) fileRef.current.value = '';
+  }
 
   const onSubmit = async (data: IProduct) => {
     setFileError(false);
     clearErrors();
 
-    if(fileRef.current?.files?.length === 0)  {
-      setFileError(true)
-      return
-    };
+    if (fileRef.current?.files?.length === 0) {
+      setFileError(true);
+      return;
+    }
     clearErrors();
     setIsPostingProd(true);
 
@@ -58,11 +68,9 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
       };
 
       await axios.post('/api/admin', product);
-      setIsPostingProd(false);
+      handleDeleteImg()
       reset();
-      
-      if (fileRef.current) fileRef.current.value = '';
-      
+      setIsPostingProd(false);
       toast.success('Product saved!');
     } catch (error) {
       toast.error('Something went wrong!');
@@ -160,7 +168,9 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
             <input
               onChange={handleGetImage}
               ref={fileRef}
-              className={`${fileError && 'border-red-500'} p-2 rounded-md border border-gray-400
+              className={`${
+                fileError && 'border-red-500'
+              } p-2 rounded-md border border-gray-400
               m-0 focus:outline-none
               focus:border-blue-800
              `}
@@ -168,7 +178,14 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               id='image'
             />
           </div>
-          
+          {img && (
+            <div className='w-20 h-20 relative'>
+              <Image className='rounded-md' width={80} height={80} src={img} alt='product image' />
+              <button onClick={handleDeleteImg} className='absolute flex justify-center items-center bg-neutral-500 text-white rounded-full p-1 -right-2 -top-2 shadow-md hover:shadow-lg transition-all'>
+                <MdClose size={12} />
+              </button>
+            </div>
+          )}
           <button
             type='submit'
             className='disabled:bg-slate-500 disabled:text-white inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
