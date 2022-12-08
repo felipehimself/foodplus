@@ -8,12 +8,13 @@ export default withAuth(
 
   {
     callbacks: {
-      authorized({ token }) {        
+      authorized({ token }) {
         return token?.role == 'admin';
       },
-      
     },
   }
 );
 
-export const config = {matcher: ['/admin']}
+export const config = {
+  matcher: ['/admin', '/admin/add-product', '/admin/all-products'],
+};
