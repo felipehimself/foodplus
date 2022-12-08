@@ -47,35 +47,35 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const onSubmit = async (data: IProduct) => {
     setFileError(false);
     clearErrors();
+    console.log(data)
+    // if (fileRef.current?.files?.length === 0) {
+    //   setFileError(true);
+    //   return;
+    // }
+    // clearErrors();
+    // setIsPostingProd(true);
 
-    if (fileRef.current?.files?.length === 0) {
-      setFileError(true);
-      return;
-    }
-    clearErrors();
-    setIsPostingProd(true);
+    // try {
+    //   const uploadRes = await axios.post(
+    //     'https://api.cloudinary.com/v1_1/dggwpfsnj/image/upload',
+    //     imgFormData
+    //   );
 
-    try {
-      const uploadRes = await axios.post(
-        'https://api.cloudinary.com/v1_1/dggwpfsnj/image/upload',
-        imgFormData
-      );
+    //   const product = {
+    //     ...data,
+    //     imageId: uploadRes.data.public_id,
+    //     imageUrl: uploadRes.data.secure_url,
+    //   };
 
-      const product = {
-        ...data,
-        imageId: uploadRes.data.public_id,
-        imageUrl: uploadRes.data.secure_url,
-      };
-
-      await axios.post('/api/admin', product);
-      handleDeleteImg()
-      reset();
-      setIsPostingProd(false);
-      toast.success('Product saved!');
-    } catch (error) {
-      toast.error('Something went wrong!');
-      console.log(error);
-    }
+    //   await axios.post('/api/admin', product);
+    //   handleDeleteImg()
+    //   reset();
+    //   setIsPostingProd(false);
+    //   toast.success('Product saved!');
+    // } catch (error) {
+    //   toast.error('Something went wrong!');
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -144,6 +144,8 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
             </label>
             <input
               {...register('price')}
+              step="0.01"
+              min={0}
               type='number'
               name='price'
               className={`
