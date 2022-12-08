@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdList, MdEditNote, MdAdd } from 'react-icons/md';
+import { MdList, MdAdd } from 'react-icons/md';
 import Link from 'next/link';
 import AdminContainer from '../../components/AdminContainer';
 
@@ -19,7 +19,7 @@ const Admin = () => {
         </Link>
         <Link
           href='/admin/all-products'
-          className='w-44 h-28 flex gap-2 justify-center items-center rounded-md bg-white shadow shadow-md hover:shadow-lg transition-all'
+          className='w-44 h-28 flex gap-2 justify-center items-center rounded-md bg-white shadow-md hover:shadow-lg transition-all'
         >
           <span>All Products</span>
           <MdList size={20} className='fill-slate-600' />
