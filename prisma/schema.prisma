@@ -67,7 +67,7 @@ model Category {
 
 model Product {
     id            String    @id @default(cuid())
-    productId     String    @default(cuid())
+    productId     String    @unique @default(cuid())
     name          String    @unique
     category      String    
     price         Float
