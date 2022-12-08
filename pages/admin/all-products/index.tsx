@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import { IProduct } from '../../../types/Product';
 import AdminContainer from '../../../components/AdminContainer';
 import AdminHeading from '../../../components/AdminHeading';
@@ -8,7 +9,6 @@ import client from '../../../lib/prismadb';
 import axios from 'axios';
 import { MdEditNote, MdDelete } from 'react-icons/md';
 import toast, { Toaster } from 'react-hot-toast';
-
 const AllProducts = ({ products }: { products: IProduct[] }) => {
   const [allProducts, setAllProducts] = useState(products);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -105,9 +105,9 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
                       </td>
                       <td className='px-6 text-ellipsis overflow-hidden w-10 py-4 whitespace-nowrap text-xs font-medium text-gray-900'>
                         <div className='flex items-center gap-2'>
-                          <button title='Edit'>
+                          <Link href={`/admin/edit-product/${product.productId}`} title='Edit'>
                             <MdEditNote size={24} />
-                          </button>
+                          </Link>
                           <button
                             disabled={isDeleting}
                             onClick={() =>
