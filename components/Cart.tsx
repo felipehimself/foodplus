@@ -82,7 +82,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
         {cart.order.length !== 0 && (
           <div className='space-y-2 mt-2'>
             <p className='text-center font-semibold text-neutral-600'>
-              TOTAL $ {cart.totalAmt}
+              TOTAL $ {cart.totalAmt.toFixed(2)}
             </p>
 
             <Button
