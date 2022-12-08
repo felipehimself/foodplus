@@ -14,23 +14,23 @@ const Admin = () => {
           href='/admin/add-product'
           className='w-44 h-28 flex gap-2 justify-center items-center rounded-md bg-white shadow text'
         >
-          <span>Add Product</span>{' '}
+          <span>Add Product</span>
           <MdAdd size={20} className='fill-slate-600' />
         </Link>
         <Link
           href='/admin/all-products'
           className='w-44 h-28 flex gap-2 justify-center items-center rounded-md bg-white shadow text'
         >
-          <span>All Products</span>{' '}
+          <span>All Products</span>
           <MdList size={20} className='fill-slate-600' />
         </Link>
-        <Link
+        {/* <Link
           href='/admin/edit-product'
           className='w-44 h-28 flex gap-2 justify-center items-center rounded-md bg-white shadow text'
         >
-          <span>Edit Product</span>{' '}
+          <span>Edit Product</span>
           <MdEditNote size={20} className='fill-slate-600' />
-        </Link>
+        </Link> */}
       </div>
     </AdminContainer>
   );
