@@ -45,7 +45,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
           />
         </div>
 
-        <h3 className='text-center text-lg text-neutral-600 font-semibold'>
+        <h3 className='text-center text-lg  font-semibold'>
           {cart.order.length !== 0 ? 'Your order' : 'Your cart is empty'}
         </h3>
 
@@ -54,7 +54,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
             {cart.order.map((item) => {
               return (
                 <motion.li
-                  className='flex mb-2 justify-between items-center text-neutral-600 '
+                  className='flex mb-2 justify-between items-center  '
                   key={item.id}
                   initial={{ x: '-100%' }}
                   animate={{ x: 0 }}
@@ -81,7 +81,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
         <hr />
         {cart.order.length !== 0 && (
           <div className='space-y-2 mt-2'>
-            <p className='text-center font-semibold text-neutral-600'>
+            <p className='text-center font-semibold '>
               TOTAL $ {cart.totalAmt.toFixed(2)}
             </p>
 
