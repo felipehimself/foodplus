@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { useAppDispatch } from '../store/store';
 import { toggleShowCart } from '../features/showCartSlice';
 import {
@@ -10,8 +10,10 @@ import {
   FaSeedling,
   FaWineBottle,
   FaAppleAlt,
-  FaShoppingCart
+  FaShoppingCart,
 } from 'react-icons/fa';
+import { IoLogOut } from 'react-icons/io5';
+
 import { RiAdminFill, RiUserFill } from 'react-icons/ri';
 
 const menuItems = [
@@ -22,24 +24,23 @@ const menuItems = [
   { item: 'extras', icon: <FaAppleAlt size={18} />, path: 'extras' },
 ];
 
-
 const Sidebar = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const dispatch = useAppDispatch();
 
   const handleShowCart = () => {
-    dispatch(toggleShowCart(true))
-  }
+    dispatch(toggleShowCart(true));
+  };
 
   const cancelOrder = () => {
     router.push('/sauces');
   };
 
-
+  console.log(session);
 
   return (
-    <nav className='bg-gradient-to-b from-orange-600 to-orange-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between py-8 gap-6'>
+    <nav className='bg-gradient-to-b from-orange-600 to-orange-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
       <div className='flex flex-col gap-12'>
         <div className='flex justify-center h-[26px]'>
           <button onClick={handleShowCart} className=' md:hidden'>
@@ -81,21 +82,38 @@ const Sidebar = () => {
         </ul>
       </div>
 
-      {status !== 'loading' && (
-        <div className='mx-auto'>
-          {session?.user.role === 'admin' ? (
-            <Link href='/admin' className='flex flex-col items-center'>
-              <RiAdminFill size={24} />
-              <span className='text-xs'>Admin</span>
-            </Link>
+      <div className='flex flex-col space-y-4'>
+        {status !== 'loading' &&
+          (session ? (
+            <>
+              {session?.user.role === 'admin' ? (
+                <Link
+                  href='/admin'
+                  className='flex flex-col items-center gap-1'
+                >
+                  <RiAdminFill size={24} />
+                  <span className='text-xs'>Admin</span>
+                </Link>
+              ) : (
+                <Link
+                  href='/account'
+                  className='flex flex-col items-center gap-1'
+                >
+                  <RiUserFill size={24} />
+                  <span className='text-xs'>Account</span>
+                </Link>
+              )}
+              <button onClick={() => signOut()} className='mx-auto '>
+                <IoLogOut size={24} />
+              </button>
+            </>
           ) : (
-            <Link href='/account' className='flex flex-col items-center'>
+            <Link href='/signin' className='flex flex-col items-center gap-1'>
               <RiUserFill size={24} />
-              <span className='text-xs'>Account</span>
+              <span className='text-xs'>Login</span>
             </Link>
-          )}
-        </div>
-      )}
+          ))}
+      </div>
     </nav>
   );
 };
