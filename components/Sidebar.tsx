@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
 import { useSession } from 'next-auth/react';
-
+import { useAppDispatch } from '../store/store';
+import { toggleShowCart } from '../features/showCartSlice';
 import {
   FaCarrot,
   FaCheese,
@@ -13,7 +13,6 @@ import {
   FaShoppingCart
 } from 'react-icons/fa';
 import { RiAdminFill, RiUserFill } from 'react-icons/ri';
-import { IoMenuOutline } from 'react-icons/io5';
 
 const menuItems = [
   { item: 'sauces', icon: <FaWineBottle size={18} />, path: 'sauces' },
@@ -23,23 +22,27 @@ const menuItems = [
   { item: 'extras', icon: <FaAppleAlt size={18} />, path: 'extras' },
 ];
 
-interface IProps {
-  setShowCart: Function;
-}
 
-const Sidebar = ({ setShowCart }: IProps) => {
+const Sidebar = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const dispatch = useAppDispatch();
+
+  const handleShowCart = () => {
+    dispatch(toggleShowCart(true))
+  }
 
   const cancelOrder = () => {
     router.push('/sauces');
   };
 
+
+
   return (
     <nav className='bg-gradient-to-b from-orange-600 to-orange-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between py-8 gap-6'>
       <div className='flex flex-col gap-12'>
         <div className='flex justify-center h-[26px]'>
-          <button onClick={() => setShowCart(true)} className=' md:hidden'>
+          <button onClick={handleShowCart} className=' md:hidden'>
             <FaShoppingCart size={22} />
           </button>
         </div>
