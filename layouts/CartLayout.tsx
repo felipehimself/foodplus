@@ -18,7 +18,7 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
       <Cart showCart={showCart} />
       <div
         onClick={handleShowCart}
-        className='w-full h-screen overflow-y-scroll py-2 pl-8'
+        className='w-full h-screen overflow-y-auto py-2 px-6'
       >
         {children}
       </div>
