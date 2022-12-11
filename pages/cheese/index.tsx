@@ -1,6 +1,11 @@
-const index = () => {
+import { CartLayout } from "../../layouts/CartLayout"
+
+const Cheese = () => {
   return (
-    <div>index</div>
+    <div>Cheese</div>
   )
 }
-export default index
+
+Cheese.PageLayout = CartLayout;
+
+export default Cheese

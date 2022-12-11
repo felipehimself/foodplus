@@ -3,6 +3,7 @@ import { IProduct } from '../../types/Product';
 import ProductCard from '../../components/ProductCard';
 import ProductContainer from '../../components/ProductContainer';
 import client from '../../lib/prismadb';
+import { CartLayout } from '../../layouts/CartLayout';
 
 const Veggie = ({ veggies }: { veggies: IProduct[] }) => {
   return (
@@ -13,6 +14,9 @@ const Veggie = ({ veggies }: { veggies: IProduct[] }) => {
     </ProductContainer>
   );
 };
+
+Veggie.PageLayout = CartLayout;
+
 export default Veggie;
 
 export const getServerSideProps: GetServerSideProps = async () => {
