@@ -54,6 +54,7 @@ const cartSlice = createSlice({
 
     cleanCart:(state) => {
       state.order = []
+      state.totalAmt = 0
     }
   },
 });
