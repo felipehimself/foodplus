@@ -21,19 +21,18 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
   };
 
   const handleCancel = () => {
-    dispatch(cleanCart())
+    dispatch(cleanCart());
     toast.success('Your cart was cleaned!');
-
-  }
+  };
 
   return (
     <>
       <Toaster position='top-right' reverseOrder={false} />
 
       <div
-        className={`text-sm fixed z-50 transition-all ${
+        className={`text-sm fixed z-10 transition-all ${
           showCart ? 'left-0' : '-left-full'
-        } w-72 px-4 pb-4 h-screen bg-zinc-50 flex justify-between flex-col gap-1 shadow-lg md:static md:shadow-none`}
+        } w-72 px-4 pb-4 h-screen bg-zinc-50 flex  flex-col gap-1 shadow-lg md:static md:shadow-none`}
       >
         <div>
           <Image
@@ -59,6 +58,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
                   initial={{ x: '-100%' }}
                   animate={{ x: 0 }}
                   exit={{ x: '-100%' }}
+                  transition={{duration: 0.4}}
                 >
                   <span className='font-semibold'>{item.name}</span>
                   <div className='flex items-center gap-1'>
@@ -78,26 +78,35 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
             })}
           </AnimatePresence>
         </ul>
-        <hr />
-        {cart.order.length !== 0 && (
-          <div className='space-y-2 mt-2'>
-            <p className='text-center font-semibold '>
-              TOTAL $ {cart.totalAmt.toFixed(2)}
-            </p>
-
-            <Button
-            onClick={()=> {}}
-              title='FINISH'
-              className='w-full bg-orange-500 hover:bg-orange-600 text-white'
-            />
-
-            <Button
-              onClick={handleCancel}
-              title='CANCEL'
-              className='w-full border border-orange-800 text-orange-800 hover:bg-orange-800 hover:text-white'
-            />
-          </div>
-        )}
+        <AnimatePresence>
+          {cart.order.length !== 0 && (
+            <>
+              
+              <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ type: "tween" }}
+                className='space-y-2 mt-2'
+              >
+              <hr />
+                <p className='text-center font-semibold '>
+                  TOTAL $ {cart.totalAmt.toFixed(2)}
+                </p>
+                <Button
+                  onClick={() => {}}
+                  title='FINISH'
+                  className='w-full bg-orange-500 hover:bg-orange-600 text-white'
+                />
+                <Button
+                  onClick={handleCancel}
+                  title='CANCEL'
+                  className='w-full border border-orange-400 text-orange-400 hover:border-orange-900 hover:text-orange-900 '
+                />
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
