@@ -105,7 +105,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               ${errors.category ? 'border-red-500':'border-gray-400'}
               capitalize
               p-2
-              rounded-md
+              rounded-sm
               border
               focus:outline-none
               `
@@ -133,7 +133,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               className={`
               ${errors.name ? 'border-red-500':'border-gray-400'}
                 p-2
-                rounded-md
+                rounded-sm
                 border
                 focus:outline-none
                 `}
@@ -156,7 +156,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               className={`
               ${errors.price ? 'border-red-500':'border-gray-400'}
               p-2
-              rounded-md
+              rounded-sm
               border
               focus:outline-none
               `}
@@ -174,7 +174,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               onChange={handleGetImage}
               ref={fileRef}
               className={`${fileError ? 'border-red-500':'border-gray-400'}
-              p-2 rounded-md 
+              p-2 rounded-sm 
               border
               m-0
               focus:outline-none
@@ -185,7 +185,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
           </div>
           {img && (
             <div className='w-20 h-20 relative'>
-              <Image className='rounded-md' width={80} height={80} src={img} alt='product image' />
+              <Image className='rounded-sm' width={80} height={80} src={img} alt='product image' />
               <button onClick={handleDeleteImg} className='absolute flex justify-center items-center bg-neutral-500 text-white rounded-full p-1 -right-2 -top-2 shadow-md hover:shadow-lg transition-all'>
                 <MdClose size={12} />
               </button>

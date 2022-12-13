@@ -7,7 +7,7 @@ const Button = ({ title, className, onClick }: IProps) => {
   return (
     <button
       onClick={() => onClick()}
-      className={`${className} transition-all rounded-lg px-7 py-3 text-xs`}
+      className={`${className} transition-all px-7 py-3 text-xs`}
     >
       {title}
     </button>
