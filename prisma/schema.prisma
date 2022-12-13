@@ -50,6 +50,20 @@ model User {
   role          String?
   accounts      Account[]
   sessions      Session[]
+  address       Address?
+}
+
+model Address {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  street        String
+  number        Int
+  city          String
+  state         String
+  isComplete    Boolean   @default(false)
+  user          User @relation(fields: [userId], references: [id]) 
+  
+  @@index([userId])    
 }
 
 model VerificationToken {
