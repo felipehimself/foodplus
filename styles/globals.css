@@ -9,7 +9,7 @@
   }
 
   input, select {
-    @apply p-2 rounded border focus:outline-none focus:border-b-accent-400
+    @apply p-2 rounded border focus:outline-none focus:border-b-primary-400
   }
 
   label {
