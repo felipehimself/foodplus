@@ -6,3 +6,10 @@ export interface IUserData {
   image: string;
   role: string | null;
 }
+
+export interface IAddress {
+  street: string;
+  number: number;
+  city: string;
+  state: string;
+}
