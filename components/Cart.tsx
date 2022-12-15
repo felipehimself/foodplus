@@ -7,13 +7,18 @@ import { MdClose } from 'react-icons/md';
 import { useAppDispatch } from '../store/store';
 import { removeFromCart, cleanCart } from '../features/cartSlice';
 
+
+
 const { motion, AnimatePresence } = require('framer-motion');
 
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 const Cart = ({ showCart }: { showCart: boolean }) => {
   const { cart } = useSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
+
+  const router = useRouter();
 
   const handleRemoveFromCart = (productId: string) => {
     dispatch(removeFromCart({ productId }));
@@ -25,12 +30,16 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
     toast.success('Your cart was cleaned!');
   };
 
+  const handleCheckout = () => {
+    router.push('/checkout');
+  };
+
   return (
     <>
       <Toaster position='top-right' reverseOrder={false} />
 
       <div
-        className={`text-sm fixed z-10 transition-all ${
+        className={`overflow-y-hidden text-sm fixed z-10 transition-all ${
           showCart ? 'left-0' : '-left-full'
         } w-72 px-4 pb-4 h-screen bg-zinc-50 flex  flex-col gap-1 shadow-lg md:static md:shadow-none`}
       >
@@ -58,7 +67,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
                   initial={{ x: '-100%' }}
                   animate={{ x: 0 }}
                   exit={{ x: '-100%' }}
-                  transition={{duration: 0.4}}
+                  transition={{ duration: 0.4 }}
                 >
                   <span className='font-semibold'>{item.name}</span>
                   <div className='flex items-center gap-1'>
@@ -81,27 +90,26 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
         <AnimatePresence>
           {cart.order.length !== 0 && (
             <>
-              
               <motion.div
                 initial={{ y: '100%' }}
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
-                transition={{ type: "tween" }}
+                transition={{ type: 'tween' }}
                 className='space-y-2 mt-2'
               >
-              <hr />
+                <hr />
                 <p className='text-center font-semibold '>
                   TOTAL $ {cart.totalAmt.toFixed(2)}
                 </p>
                 <Button
-                  onClick={() => {}}
-                  title='FINISH'
-                  className='w-full bg-orange-500 hover:bg-orange-600 text-white'
+                  onClick={handleCheckout}
+                  title='CHECK OUT'
+                  className='w-full rounded bg-primary-500 hover:bg-primary-600 text-white'
                 />
                 <Button
                   onClick={handleCancel}
                   title='CANCEL'
-                  className='w-full border border-orange-400 text-orange-400 hover:border-orange-900 hover:text-orange-900 '
+                  className='w-full rounded border border-primary-400 text-primary-400 hover:border-primary-900 hover:text-primary-900 '
                 />
               </motion.div>
             </>
