@@ -2,7 +2,7 @@ import { getProviders, signIn, useSession } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
 import { BsGithub } from 'react-icons/bs';
 import { useRouter } from 'next/router';
-
+import { useEffect } from 'react';
 
 const icons = {
   google: {
@@ -18,21 +18,25 @@ const icons = {
 };
 
 export default function SignIn({ providers }: any) {
-  const { data: session } = useSession()
+  const { data: session, status  } = useSession();
 
+  const { query: { callback } } = useRouter();
+  
   const router = useRouter();
 
-  if(session)  router.push('/sauces')
+  useEffect(() => {
+    if ((status !== 'loading') && session) {
+      router.back();
+    }
+  }, [session, router, status]);
 
   return (
-    <div className='h-screen -mt-8 w-screen flex flex-col gap-6 justify-center items-center'>
+    <div className='h-screen fixed inset-0 z-30 bg-white  w-screen flex flex-col gap-6 justify-center items-center'>
       <div className='shadow bg-white rounded-lg p-6 space-y-3'>
-      <h1 className='text-lg text-center'>Sign in to continue</h1>
+        <h1 className='text-lg text-center'>Sign in to continue</h1>
         {Object.values(providers).map((provider: any) => (
           <div
-            className={` ${
-              icons[provider.id as keyof typeof icons]['bgColor']
-            } 
+            className={` ${icons[provider.id as keyof typeof icons]['bgColor']} 
             ${
               icons[provider.id as keyof typeof icons]['txtColor']
             } px-6 py-2 border rounded-md shadow hover:shadow-md transition-all`}
@@ -40,7 +44,8 @@ export default function SignIn({ providers }: any) {
           >
             <button
               className='flex items-center gap-4'
-              onClick={() => signIn(provider.id)}
+              onClick={() => signIn(provider.id, {callbackUrl:callback as string || '/sauces'})}
+              disabled={status == 'loading'}
             >
               {icons[provider.id as keyof typeof icons]['icon']}
               Sign in with {provider.name}
