@@ -29,12 +29,12 @@ export default function App({
       <Provider store={store}>
         {isLoading && <PageLoading />}
         <main className={inter.className}>
-          <Sidebar />
-          <div className='ml-[80px] flex'>
+          
+          
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </div>
+          
         </main>
       </Provider>
     </SessionProvider>
