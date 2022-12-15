@@ -5,7 +5,14 @@ import { useSession, signOut } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store/store';
 import { toggleShowCart } from '../features/showCartSlice';
-import { FaCarrot, FaCheese, FaSeedling, FaWineBottle, FaAppleAlt, FaShoppingCart } from 'react-icons/fa';
+import {
+  FaCarrot,
+  FaCheese,
+  FaSeedling,
+  FaWineBottle,
+  FaAppleAlt,
+  FaShoppingCart,
+} from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
 import { RiAdminFill, RiUserFill } from 'react-icons/ri';
 
@@ -19,23 +26,28 @@ const menuItems = [
 
 const Sidebar = () => {
   const router = useRouter();
+
+  const { pathname } = router;
+
   const { data: session, status } = useSession();
 
   const dispatch = useAppDispatch();
 
-  const cartItems = useSelector((state:RootState)=> state.cart.order)
+  const cartItems = useSelector((state: RootState) => state.cart.order);
 
   const handleShowCart = () => {
     dispatch(toggleShowCart(true));
   };
 
   return (
-    <nav className='bg-gradient-to-b from-orange-600 to-orange-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
+    <nav className='bg-gradient-to-b from-primary-600 to-primary-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
       <div className='flex flex-col gap-12'>
         <div className='flex justify-center h-[26px]'>
           <button onClick={handleShowCart} className='md:hidden relative'>
             <FaShoppingCart size={22} />
-          {cartItems.length > 0 && <span className='absolute top-0 -right-1 text-xs bg-yellow-400 p-1 rounded-full text-neutral-500'></span>}  
+            {cartItems.length > 0 && (
+              <span className='absolute top-0 -right-1 text-xs bg-yellow-400 p-1 rounded-full text-neutral-500'></span>
+            )}
           </button>
         </div>
         <ul className='flex flex-col gap-6'>
@@ -99,7 +111,10 @@ const Sidebar = () => {
               </button>
             </>
           ) : (
-            <Link href='/signin' className='flex flex-col items-center gap-1'>
+            <Link
+              href={`/signin?callback=${pathname}`}
+              className='flex flex-col items-center gap-1'
+            >
               <RiUserFill size={24} />
               <span className='text-xs'>Login</span>
             </Link>
