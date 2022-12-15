@@ -4,7 +4,7 @@ import Cart from '../components/Cart';
 import { RootState } from '../store/store';
 import { useAppDispatch } from '../store/store';
 import { toggleShowCart } from '../features/showCartSlice';
-
+import Sidebar from '../components/Sidebar';
 export const CartLayout = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
   const { showCart } = useSelector((state: RootState) => state.showCart);
@@ -14,7 +14,8 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <>
+    <div className='ml-[80px] flex'>
+      <Sidebar />
       <Cart showCart={showCart} />
       <div
         onClick={handleShowCart}
@@ -22,6 +23,6 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
       >
         {children}
       </div>
-    </>
+    </div>
   );
 };
