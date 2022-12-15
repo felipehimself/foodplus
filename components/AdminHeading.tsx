@@ -12,7 +12,7 @@ const AdminHeading = ({ title, width }: IProps) => {
       <Link href='/admin' className='absolute left-0'>
         <MdArrowBack className='fill-slate-600' size={22} />
       </Link>
-      <h2 className=' font-semibold text-center text-slate-600'>{title}</h2>
+      <h2>{title}</h2>
     </div>
   );
 };
