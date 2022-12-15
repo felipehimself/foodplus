@@ -12,10 +12,11 @@ import client from '../../../lib/prismadb';
 import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
+import Button from '../../../components/Button';
 
 const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const [isPostingProd, setIsPostingProd] = useState(false);
-  const [formData, setFormData] = useState<FormData|null>(null);
+  const [formData, setFormData] = useState<FormData | null>(null);
   const [img, setImg] = useState<string | null>(null);
   const [fileError, setFileError] = useState(false);
 
@@ -31,21 +32,19 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
     resolver: yupResolver(productValidation),
   });
 
-  
   const handleGetImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const imgFormData = new FormData();
     const file = e.target.files![0];
     imgFormData.append('file', file);
     imgFormData.append('upload_preset', 'foodplus');
-    setFormData(imgFormData)
+    setFormData(imgFormData);
     setImg(URL.createObjectURL(file));
-
   };
 
   const handleDeleteImg = () => {
     setImg(null);
     if (fileRef.current) fileRef.current.value = '';
-  }
+  };
 
   const onSubmit = async (data: IProduct) => {
     setFileError(false);
@@ -71,10 +70,10 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
       };
 
       await axios.post('/api/admin', product);
-      handleDeleteImg()
+      handleDeleteImg();
       reset();
       setIsPostingProd(false);
-      setFormData(null)
+      setFormData(null);
       toast.success('Product saved!');
     } catch (error) {
       setIsPostingProd(false);
@@ -83,33 +82,27 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
       console.log(error);
     }
   };
-  
+
   return (
     <AdminContainer>
       <Toaster position='top-right' reverseOrder={false} />
       <AdminHeading title='Add Product' />
-      <form onSubmit={handleSubmit(onSubmit)} className='px-2'>
+      <form onSubmit={handleSubmit(onSubmit)} className='px-2 pt-2'>
         <fieldset
           disabled={isPostingProd}
-          className='mx-auto lg:w-4/12 flex flex-col gap-4 '
+          className='mx-auto lg:w-4/12 flex flex-col gap-5 group'
         >
-          <div className='flex flex-col gap-1 text-sm'>
-            <label htmlFor='type' className='text-slate-600'>
-              Category
-            </label>
+          <div className='flex flex-col gap-2 text-sm'>
+            <label htmlFor='type'>Category</label>
             <select
               {...register('category')}
               name='category'
               id='type'
               className={`
-              ${errors.category ? 'border-red-500':'border-gray-400'}
+              ${errors.category ? 'border-b-red-800' : ''}
               capitalize
-              p-2
-              rounded-sm
-              border
-              focus:outline-none
-              `
-              }
+            
+              `}
               aria-label='Select category'
             >
               {productList.map(({ id, name }) => (
@@ -119,84 +112,60 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
               ))}
             </select>
           </div>
-          <div className='flex flex-col gap-1 text-sm'>
-            <label
-              htmlFor='name'
-              className='form-label inline-block  text-gray-700'
-            >
-              Name
-            </label>
+          <div className='flex flex-col gap-2 text-sm'>
+            <label htmlFor='name'>Name</label>
             <input
               {...register('name')}
               type='text'
               name='name'
-              className={`
-              ${errors.name ? 'border-red-500':'border-gray-400'}
-                p-2
-                rounded-sm
-                border
-                focus:outline-none
-                `}
+              className={errors.name ? 'border-b-red-800' : ''}
               id='name'
             />
           </div>
-          <div className='flex flex-col gap-1 text-sm'>
-            <label
-              htmlFor='price'
-              className='form-label inline-block  text-gray-700'
-            >
-              Price
-            </label>
+          <div className='flex flex-col gap-2 text-sm'>
+            <label htmlFor='price'>Price</label>
             <input
               {...register('price')}
-              step="0.01"
+              step='0.01'
               min={0}
               type='number'
               name='price'
-              className={`
-              ${errors.price ? 'border-red-500':'border-gray-400'}
-              p-2
-              rounded-sm
-              border
-              focus:outline-none
-              `}
+              className={errors.price ? 'border-b-red-800' : ''}
               id='price'
             />
           </div>
-          <div className='flex flex-col gap-1 text-sm'>
-            <label
-              htmlFor='image'
-              className='form-label inline-block mb-2 text-gray-700'
-            >
-              Image
-            </label>
+          <div className='flex flex-col gap-2 text-sm'>
+            <label htmlFor='image'>Image</label>
             <input
               onChange={handleGetImage}
               ref={fileRef}
-              className={`${fileError ? 'border-red-500':'border-gray-400'}
-              p-2 rounded-sm 
-              border
-              m-0
-              focus:outline-none
-             `}
+              className={fileError ? 'border-b-red-800' : ''}
               type='file'
               id='image'
             />
           </div>
           {img && (
             <div className='w-20 h-20 relative'>
-              <Image className='rounded-sm' width={80} height={80} src={img} alt='product image' />
-              <button onClick={handleDeleteImg} className='absolute flex justify-center items-center bg-neutral-500 text-white rounded-full p-1 -right-2 -top-2 shadow-md hover:shadow-lg transition-all'>
+              <Image
+                className='rounded'
+                width={80}
+                height={80}
+                src={img}
+                alt='product image'
+              />
+              <button
+                onClick={handleDeleteImg}
+                className='absolute flex justify-center items-center bg-neutral-500 text-white rounded-full p-1 -right-2 -top-2 shadow-md hover:shadow-lg transition-all'
+              >
                 <MdClose size={12} />
               </button>
             </div>
           )}
-          <button
-            type='submit'
-            className='disabled:bg-slate-500 disabled:text-white inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
-          >
-            Send
-          </button>
+          <Button
+            title='SEND'
+            onClick={() => {}}
+            className='bg-primary-500 text-white rounded  hover:bg-primary-600'
+          />
         </fieldset>
       </form>
     </AdminContainer>
