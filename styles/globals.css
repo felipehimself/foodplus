@@ -3,7 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+  
   body {
     @apply  text-neutral-600;
+  }
+
+  input, select {
+    @apply p-2 rounded border focus:outline-none focus:border-b-accent-400
+  }
+
+  label {
+    @apply text-slate-600 text-xs;
+  }
+
+  h2 {
+    @apply text-lg font-semibold;
   }
 }
