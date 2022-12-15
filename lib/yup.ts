@@ -6,7 +6,7 @@ export const productValidation = Yup.object().shape({
   price: Yup.number().required('required'),
 });
 
-export const userDataValidation = Yup.object().shape({
+export const userAddressValidation = Yup.object().shape({
   street: Yup.string().trim().required('required'),
   number: Yup.number(),
   city: Yup.string().trim().required('required'),
