@@ -61,7 +61,7 @@ model Address {
   city          String
   state         String
   isComplete    Boolean   @default(false)
-  user          User @relation(fields: [userId], references: [id]) 
+  user          User @relation(fields: [userId], references: [email]) 
   
   @@index([userId])    
 }
