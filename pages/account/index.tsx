@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { IAddress } from '../../types/User';
 import { userAddressValidation } from '../../lib/yup';
 import Button from '../../components/Button';
+import MainLayout from '../../layouts/MainLayout';
 
 const Account = ({ userData }: { userData: IUserData }) => {
   const [activeTab, setActiveTab] = useState('info');
@@ -161,6 +162,9 @@ const Account = ({ userData }: { userData: IUserData }) => {
     </section>
   );
 };
+
+Account.PageLayout = MainLayout
+
 
 export default Account;
 

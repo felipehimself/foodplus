@@ -13,6 +13,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
 import Button from '../../../components/Button';
+import MainLayout from '../../../layouts/MainLayout';
 
 const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const [isPostingProd, setIsPostingProd] = useState(false);
@@ -172,6 +173,8 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   );
 };
 export default AddProduct;
+
+AddProduct.PageLayout = MainLayout
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const productList = await client.category.findMany();

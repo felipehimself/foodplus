@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
 import PageLoading from '../../components/PageLoading';
+import MainLayout from '../../layouts/MainLayout';
 import { RootState } from '../../store/store';
 
 const Checkout = () => {
@@ -98,5 +99,8 @@ const Checkout = () => {
     </>
   );
 };
+
+Checkout.PageLayout = MainLayout
+
 
 export default Checkout;

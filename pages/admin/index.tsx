@@ -2,6 +2,7 @@ import React from 'react';
 import { MdList, MdAdd } from 'react-icons/md';
 import Link from 'next/link';
 import AdminContainer from '../../components/AdminContainer';
+import MainLayout from '../../layouts/MainLayout';
 
 const Admin = () => {
   return (
@@ -28,4 +29,7 @@ const Admin = () => {
     </AdminContainer>
   );
 };
+
+Admin.PageLayout = MainLayout
+
 export default Admin;

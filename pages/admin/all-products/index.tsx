@@ -9,6 +9,7 @@ import client from '../../../lib/prismadb';
 import axios from 'axios';
 import { MdEditNote, MdDelete } from 'react-icons/md';
 import toast, { Toaster } from 'react-hot-toast';
+import MainLayout from '../../../layouts/MainLayout';
 const AllProducts = ({ products }: { products: IProduct[] }) => {
   const [allProducts, setAllProducts] = useState(products);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -46,7 +47,7 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
   return (
     <AdminContainer>
       <Toaster position='top-right' reverseOrder={false} />
-      <AdminHeading width='w-11/12' title='All Products' />
+      <AdminHeading title='All Products' />
       <div className='flex flex-col '>
         <div className='overflow-x-auto'>
           <div className='py-2 inline-block min-w-full sm:px-6 lg:px-8'>
@@ -136,6 +137,8 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
   );
 };
 export default AllProducts;
+
+AllProducts.PageLayout = MainLayout
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const products = await client.product.findMany();

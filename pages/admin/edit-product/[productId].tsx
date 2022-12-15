@@ -12,6 +12,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
 import { useRouter } from 'next/router';
+import MainLayout from '../../../layouts/MainLayout';
 
 
 const EditProduct = ({ product, productList }: { product: IProduct, productList: ICategory[] }) => {
@@ -229,6 +230,9 @@ const EditProduct = ({ product, productList }: { product: IProduct, productList:
   );
 };
 export default EditProduct;
+
+EditProduct.PageLayout = MainLayout
+
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const productId = ctx?.params?.productId as string;
