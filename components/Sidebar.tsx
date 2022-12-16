@@ -29,6 +29,8 @@ const Sidebar = () => {
 
   const { pathname } = router;
 
+  const callback = pathname.substring(1)
+  
   const { data: session, status } = useSession();
 
   const dispatch = useAppDispatch();
@@ -112,7 +114,7 @@ const Sidebar = () => {
             </>
           ) : (
             <Link
-              href={`/signin?callback=${pathname}`}
+              href={`/signin?callback=${callback}`}
               className='flex flex-col items-center gap-1'
             >
               <RiUserFill size={24} />
