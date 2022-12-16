@@ -60,7 +60,6 @@ model Address {
   number        Int
   city          String
   state         String
-  isComplete    Boolean   @default(false)
   user          User @relation(fields: [userId], references: [email]) 
   
   @@index([userId])    
