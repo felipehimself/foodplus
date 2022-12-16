@@ -15,7 +15,7 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div style={{marginLeft:'80px'}} className='ml-[80px] flex'>
+    <div style={{marginLeft:'80px'}} className='ml-[76px] md:ml-[80px] flex'>
       <Sidebar />
       <Cart showCart={showCart} />
       <div
