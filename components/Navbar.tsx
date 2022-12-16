@@ -7,7 +7,7 @@ const Navbar = () => {
   const { back, asPath } = useRouter();
 
   return (
-    <header className='bg-primary-500'>
+    <header className='bg-primary-500 sticky top-0'>
       <nav
         className={`w-full px-2 ${
           asPath.includes('all-product') ? 'md:w-11/12 md:px-8' : 'md:w-8/12'
