@@ -58,15 +58,15 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
         </h3>
 
         <ul className='mt-2 overflow-x-hidden overflow-y-auto h-1/2'>
-          <AnimatePresence>
+          <AnimatePresence initial={false}>
             {cart.order.map((item) => {
               return (
                 <motion.li
                   className='flex mb-2 justify-between items-center  '
                   key={item.id}
-                  initial={{ x: '-100%' }}
-                  animate={{ x: 0 }}
-                  exit={{ x: '-100%' }}
+                  initial={{ x: '-100%' , opacity: 0}}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: '-100%', opacity: 0 }}
                   transition={{ duration: 0.4 }}
                 >
                   <span className='font-semibold'>{item.name}</span>
@@ -87,13 +87,13 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
             })}
           </AnimatePresence>
         </ul>
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {cart.order.length !== 0 && (
             <>
               <motion.div
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '100%' }}
+                initial={{ y: '100%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: '100%', opacity: 0 }}
                 transition={{ type: 'tween' }}
                 className='space-y-2 mt-2'
               >
