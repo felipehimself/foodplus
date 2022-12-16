@@ -11,8 +11,11 @@ import { IAddress } from '../../types/User';
 import { userAddressValidation } from '../../lib/yup';
 import Button from '../../components/Button';
 import MainLayout from '../../layouts/MainLayout';
+import axios from 'axios';
+import { toast, Toaster } from 'react-hot-toast';
+import { savingAddress } from '../../lib/hot-toast';
 
-const Account = ({ userData }: { userData: IUserData }) => {
+const Account = ({ userData , userAddress}: { userData: IUserData, userAddress:null | IAddress }) => {
   const [activeTab, setActiveTab] = useState('info');
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -24,14 +27,30 @@ const Account = ({ userData }: { userData: IUserData }) => {
     formState: { errors },
     clearErrors,
     reset,
+    
   } = useForm<IAddress>({
+    defaultValues: userAddress? userAddress : {},
     resolver: yupResolver(userAddressValidation),
   });
 
   const onSubmit = async (data: IAddress) => {
-   
+    setIsDisabled(true);
     clearErrors();
-    console.log(data);
+
+     
+    try {
+      if(!userAddress){
+        // register address for the first time
+         await toast.promise(axios.post('/api/user', data), savingAddress);
+      } else {
+        // update existing address record
+         await toast.promise(axios.put('/api/user', data), savingAddress);
+      }
+
+    } catch (error) {
+      console.log(error)
+      setIsDisabled(false);
+    }
     
   };
 
@@ -41,9 +60,9 @@ const Account = ({ userData }: { userData: IUserData }) => {
     setIsDisabled(true)
   }
 
-  
-
   return (
+  <>
+  <Toaster position='top-center' reverseOrder={false} />
     <section className='mx-auto w-full md:w-8/12 mt-4 p-2'>
       <h2 className='text-lg text-center mb-2 '>Account</h2>
       <div className='flex justify-around'>
@@ -159,7 +178,7 @@ const Account = ({ userData }: { userData: IUserData }) => {
           <article>orders</article>
         )}
       </div>
-    </section>
+    </section></>
   );
 };
 
@@ -190,7 +209,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   });
 
+
+  const userAddress = await client.address.findUnique({
+    where: {
+      userId: session?.user.email!
+    }
+  })
+
+
   return {
-    props: { userData },
+    props: { userData, userAddress  },
   };
 };
