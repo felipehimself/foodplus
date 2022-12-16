@@ -15,3 +15,10 @@ export const savingProduct = {
   success: 'Product saved',
   error: 'Something went wrong',
 };
+
+export const orderingProduct = {
+  loading: 'Sending order...',
+  success: "Order sent, you're being redirected",
+  error: 'Something went wrong',
+};
+
