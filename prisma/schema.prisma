@@ -51,6 +51,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   address       Address?
+  orders        UserOrder[]
 }
 
 model Address {
@@ -88,3 +89,14 @@ model Product {
     imageId       String    @unique
 }
 
+model UserOrder {
+      id            String    @id @default(cuid())
+      userId        String    
+      orderId       String    
+      productId     String
+      quantity      Int
+      paymentMethod String
+      user          User @relation(fields: [userId], references: [email]) 
+  
+    @@index([userId])     
+}
