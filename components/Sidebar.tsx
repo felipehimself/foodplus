@@ -42,7 +42,7 @@ const Sidebar = () => {
   };
 
   return (
-    <nav className='bg-gradient-to-b from-primary-600 to-primary-500  w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
+    <nav className='bg-gradient-to-b from-primary-600 to-primary-500 w-16 md:w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
       <div className='flex flex-col gap-12'>
         <div className='flex justify-center h-[26px]'>
           <button onClick={handleShowCart} className='md:hidden relative'>
