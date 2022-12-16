@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { BsGithub } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import MainLayout from '../layouts/MainLayout';
 
 const icons = {
   google: {
@@ -17,11 +18,19 @@ const icons = {
   },
 };
 
-export default function SignIn({ providers }: any) {
+const callbackOptions = {
+  sauces:'/sauces',
+  veggies:'/veggies',
+  cheese:'/cheese',
+  crunch:'/crunch',
+  extras:'/extras'
+}
+
+const SignIn = ({ providers }: any) => {
   const { data: session, status  } = useSession();
 
   const { query: { callback } } = useRouter();
-  
+
   const router = useRouter();
 
   useEffect(() => {
@@ -31,8 +40,8 @@ export default function SignIn({ providers }: any) {
   }, [session, router, status]);
 
   return (
-    <div className='h-screen fixed inset-0 z-30 bg-white  w-screen flex flex-col gap-6 justify-center items-center'>
-      <div className='shadow bg-white rounded-lg p-6 space-y-3'>
+    <div className='mt-4 bg-white flex flex-col gap-6 justify-center items-center'>
+      <div className='rounded border p-6 space-y-3'>
         <h1 className='text-lg text-center'>Sign in to continue</h1>
         {Object.values(providers).map((provider: any) => (
           <div
@@ -44,7 +53,7 @@ export default function SignIn({ providers }: any) {
           >
             <button
               className='flex items-center gap-4'
-              onClick={() => signIn(provider.id, {callbackUrl:callback as string || '/sauces'})}
+              onClick={() => signIn(provider.id, {callbackUrl:callbackOptions[callback as keyof typeof callbackOptions] || '/sauces'})}
               disabled={status == 'loading'}
             >
               {icons[provider.id as keyof typeof icons]['icon']}
@@ -57,6 +66,9 @@ export default function SignIn({ providers }: any) {
   );
 }
 
+SignIn.PageLayout = MainLayout
+
+export default SignIn
 export async function getServerSideProps(context: any) {
   const providers = await getProviders();
   return {
