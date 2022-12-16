@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
 import Button from '../../../components/Button';
 import MainLayout from '../../../layouts/MainLayout';
+import { savingProduct } from '../../../lib/hot-toast';
 
 const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const [isPostingProd, setIsPostingProd] = useState(false);
@@ -69,8 +70,11 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
         imageId: uploadRes.data.public_id,
         imageUrl: uploadRes.data.secure_url,
       };
+      
+      await toast.promise(
+        axios.post('/api/admin', product), savingProduct);
 
-      await axios.post('/api/admin', product);
+      // await axios.post('/api/admin', product);
       handleDeleteImg();
       reset();
       setIsPostingProd(false);
@@ -86,9 +90,9 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
 
   return (
     <AdminContainer>
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <AdminHeading title='Add Product' />
-      <form onSubmit={handleSubmit(onSubmit)} className='px-2 pt-2'>
+      <form onSubmit={handleSubmit(onSubmit)} className='px-2 '>
         <fieldset
           disabled={isPostingProd}
           className='mx-auto lg:w-4/12 flex flex-col gap-5 group'
