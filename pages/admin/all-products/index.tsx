@@ -10,6 +10,8 @@ import axios from 'axios';
 import { MdEditNote, MdDelete } from 'react-icons/md';
 import toast, { Toaster } from 'react-hot-toast';
 import MainLayout from '../../../layouts/MainLayout';
+import { deletingProduct } from '../../../lib/hot-toast';
+
 const AllProducts = ({ products }: { products: IProduct[] }) => {
   const [allProducts, setAllProducts] = useState(products);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -27,13 +29,7 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
     setIsDeleting(true);
     try {
       await toast.promise(
-        axios.delete(`/api/admin?productId=${productId}&imageId=${imageId}`),
-        {
-          loading: 'Sending...',
-          success: 'Product deleted',
-          error: 'Something went wrong',
-        }
-      );
+        axios.delete(`/api/admin?productId=${productId}&imageId=${imageId}`), deletingProduct);
       setAllProducts((prev) => {
         return prev.filter((prod) => prod.productId !== productId);
       });
@@ -46,7 +42,7 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
 
   return (
     <AdminContainer>
-      <Toaster position='top-right' reverseOrder={false} />
+      <Toaster position='top-center' reverseOrder={false} />
       <AdminHeading title='All Products' />
       <div className='flex flex-col '>
         <div className='overflow-x-auto'>
@@ -106,7 +102,10 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
                       </td>
                       <td className='px-6 text-ellipsis overflow-hidden w-10 py-4 whitespace-nowrap text-xs font-medium text-gray-900'>
                         <div className='flex items-center gap-2'>
-                          <Link href={`/admin/edit-product/${product.productId}`} title='Edit'>
+                          <Link
+                            href={`/admin/edit-product/${product.productId}`}
+                            title='Edit'
+                          >
                             <MdEditNote size={24} />
                           </Link>
                           <button
@@ -138,7 +137,7 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
 };
 export default AllProducts;
 
-AllProducts.PageLayout = MainLayout
+AllProducts.PageLayout = MainLayout;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const products = await client.product.findMany();
