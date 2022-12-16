@@ -63,18 +63,18 @@ const Account = ({ userData , userAddress}: { userData: IUserData, userAddress:n
   return (
   <>
   <Toaster position='top-center' reverseOrder={false} />
-    <section className='mx-auto w-full md:w-8/12 mt-4 p-2'>
-      <h2 className='text-lg text-center mb-2 '>Account</h2>
+    <section className='mx-auto w-full md:w-8/12 mt-4 px-2'>
+      <h2 className='text-lg text-center'>Account</h2>
       <div className='flex justify-around'>
         <button
           onClick={() => setActiveTab('info')}
-          className={`border-b-2 transition-all ${ activeTab === 'info' && 'border-primary-400'}  w-full py-1`}
+          className={`border-b-2 transition-all ${ activeTab === 'info' && 'border-primary-400'}  w-full py-3`}
         >
           Info
         </button>
         <button
           onClick={() => setActiveTab('orders')}
-          className={`border-b-2 transition-all ${activeTab === 'orders' && 'border-primary-400'}  w-full py-1`}
+          className={`border-b-2 transition-all ${activeTab === 'orders' && 'border-primary-400'}  w-full py-3`}
         >
           Orders
         </button>
@@ -134,7 +134,7 @@ const Account = ({ userData , userAddress}: { userData: IUserData, userAddress:n
                     {...register('street')}
                   />
                 </div>
-                <div className='flex gap-1 flex-col'>
+                <div className='flex gap-1 flex-col md:w-36'>
                   <label className='text-xs text-slate-500'>Number</label>
                   <input
                     className={`${isDisabled ? 'bg-slate-50' : ''} ${errors.number && 'border-b-red-800'}`}
@@ -157,8 +157,8 @@ const Account = ({ userData , userAddress}: { userData: IUserData, userAddress:n
 
                   />
                 </div>
-                <div className='flex gap-1 flex-col'>
-                  <label className='text-xs text-slate-500'>State</label>
+                <div className='flex gap-1 flex-col md:w-36'>
+                  <label className='text-xs text-slate-500 '>State</label>
                   <input
                     className={`${isDisabled ? 'bg-slate-50' : ''} ${errors.state && 'border-b-red-800'}`}
                     type='text'
@@ -169,9 +169,9 @@ const Account = ({ userData , userAddress}: { userData: IUserData, userAddress:n
                 </div>
               </div>
             </div>
-            <div className='flex flex-col md:flex-row   gap-2'>
+            <div className='flex flex-col md:flex-row md:justify-end   gap-2'>
               <Button disabled={isDisabled} type='button' title='CANCEL' className='disabled:border-slate-400 disabled:text-slate-400 rounded border border-primary-400 text-primary-400 hover:border-primary-900 hover:text-primary-900 ' onClick={handleCancel} />
-              <Button disabled={isDisabled} type='submit' title='SAVE' className='disabled:bg-slate-400 bg-primary-500 hover:bg-primary-600 text-white rounded border md:w-36' onClick={()=> {}} />
+              <Button disabled={isDisabled} type='submit' title='SAVE' className='disabled:bg-slate-400  bg-primary-500 hover:bg-primary-600 text-white rounded border md:w-36' onClick={()=> {}} />
             </div>
           </form>
         ) : (
