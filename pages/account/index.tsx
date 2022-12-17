@@ -194,6 +194,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     authOptions
   );
 
+  console.log(session)
+
   if (!session?.user.email) {
     return {
       redirect: {
