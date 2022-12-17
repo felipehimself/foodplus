@@ -21,6 +21,9 @@ module.exports = {
         },
         lightWhite: '#F3F1F2',
       },
+      fontSize: {
+        '2xs': '0.625rem'
+      }
     },
   },
   plugins: [require('tw-elements/dist/plugin')],
