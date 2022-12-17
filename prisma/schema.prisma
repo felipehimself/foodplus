@@ -87,16 +87,21 @@ model Product {
     price         Float
     imageUrl      String    @unique
     imageId       String    @unique
+
+    orders        UserOrder[]
 }
 
 model UserOrder {
-      id            String    @id @default(cuid())
-      userId        String    
-      orderId       String    
-      productId     String
-      quantity      Int
-      paymentMethod String
-      user          User @relation(fields: [userId], references: [email]) 
-  
+    id            String    @id @default(cuid())
+    userId        String    
+    orderId       String    
+    productId     String
+    quantity      Int
+    paymentMethod String
+    user          User      @relation(fields: [userId], references: [email]) 
+    product       Product   @relation(fields: [productId], references: [productId]) 
+    createdAt     DateTime  @default(now())
+
+    @@index([productId]) 
     @@index([userId])     
 }
