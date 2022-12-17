@@ -1,4 +1,4 @@
-import { getProviders, signIn, useSession } from 'next-auth/react';
+import { getProviders, getSession, signIn, useSession } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
 import { BsGithub } from 'react-icons/bs';
 import { useRouter } from 'next/router';
@@ -33,11 +33,11 @@ const SignIn = ({ providers }: any) => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if ((status !== 'loading') && session) {
-      router.back();
-    }
-  }, [session, router, status]);
+  // useEffect(() => {
+  //   if ((status !== 'loading') && session) {
+  //     router.back();
+  //   }
+  // }, [session, router, status]);
 
   return (
     <div className='mt-4 bg-white flex flex-col gap-6 justify-center items-center'>
@@ -69,8 +69,22 @@ const SignIn = ({ providers }: any) => {
 SignIn.PageLayout = MainLayout
 
 export default SignIn
+
 export async function getServerSideProps(context: any) {
+  const session = await getSession(context);
+    
+    if (session) {
+      return {
+        redirect: {
+          destination: '/sauces',
+          permanent: false
+        },
+      };
+    }
+  
   const providers = await getProviders();
+   
+  
   return {
     props: { providers },
   };
