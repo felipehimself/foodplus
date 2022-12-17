@@ -7,8 +7,8 @@ import toast, { Toaster } from 'react-hot-toast';
 const ProductCard = ({ id, price, imageUrl, name, productId, category }: IProduct) => {
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = (id: string, price: number, name: string, productId:string, category:string, imageUrl:string) => {
-    dispatch(addToCart({ id, price, name, productId, category, imageUrl }));
+  const handleAddToCart = ( price: number, name: string, productId:string, category:string, imageUrl:string) => {
+    dispatch(addToCart({ price, name, productId, category, imageUrl }));
     toast.success('Added to cart!');
   };
 
@@ -16,7 +16,7 @@ const ProductCard = ({ id, price, imageUrl, name, productId, category }: IProduc
     <>
       <Toaster position='top-right' reverseOrder={false} />
       <button
-        onClick={() => handleAddToCart(id, price, name, productId, category, imageUrl)}
+        onClick={() => handleAddToCart(price, name, productId, category, imageUrl)}
         className='p-2 rounded-md bg-white shadow-md hover:shadow-lg transition-all relative flex items-center justify-between w-52 h-40'
         key={id}
       >
