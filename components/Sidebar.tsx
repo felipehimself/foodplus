@@ -44,7 +44,7 @@ const Sidebar = () => {
   return (
     <nav className='bg-gradient-to-b from-primary-600 to-primary-500 w-16 md:w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
       <div className='flex flex-col gap-12'>
-        <div className='flex justify-center h-[26px]'>
+        <div className='flex justify-center h-[1.625rem]'>
           <button onClick={handleShowCart} className='md:hidden relative'>
             <FaShoppingCart size={22} />
             {cartItems.length > 0 && (
@@ -70,9 +70,9 @@ const Sidebar = () => {
                 -translate-y-1/2
                 first-letter:border-solid
                 border-r-zinc-50
-                border-r-[10px]
+                border-r-[0.625rem]
                 border-y-transparent
-                border-y-[10px]
+                border-y-[0.625rem]
                 border-l-0
                 transition-all
                 ${
