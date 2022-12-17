@@ -71,7 +71,7 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
                 >
                   <span className='font-semibold'>{item.name}</span>
                   <div className='flex items-center gap-1'>
-                    <span className='text-xs text-slate-500'>x {item.qty}</span>
+                    <span className='text-xs text-slate-500'>x {item.quantity}</span>
                     <button
                       onClick={() => handleRemoveFromCart(item.productId)}
                       className='group'

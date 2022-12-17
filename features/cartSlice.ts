@@ -20,14 +20,14 @@ const cartSlice = createSlice({
       if (isProdInCart) {
         const newState = state.order.map((prod) => {
           if (prod.productId == action.payload.productId) {
-            return { ...prod, qty: prod.qty + 1 };
+            return { ...prod, quantity: prod.quantity + 1 };
           }
 
           return prod;
         });
         state.order = newState;
       } else {
-        const newProd = { ...action.payload, qty: 1 };
+        const newProd = { ...action.payload, quantity: 1 };
         state.order.push(newProd);
       }
     },
@@ -36,7 +36,7 @@ const cartSlice = createSlice({
       const product = state.order.find((prod) => prod.productId === action.payload.productId);
       state.totalAmt = state.totalAmt - product?.price!
 
-      if (product?.qty == 1) {
+      if (product?.quantity == 1) {
         const newState = state.order.filter(
           (prod) => prod.productId !== action.payload.productId
         );
@@ -44,7 +44,7 @@ const cartSlice = createSlice({
       } else {
         const newState = state.order.map((prod) => {
           if (prod.productId === action.payload.productId) {
-            return { ...prod, qty: prod.qty - 1 };
+            return { ...prod, quantity: prod.quantity - 1 };
           }
           return prod;
         });
