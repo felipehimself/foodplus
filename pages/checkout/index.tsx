@@ -1,36 +1,53 @@
+import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { toast, Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
-import PageLoading from '../../components/PageLoading';
 import MainLayout from '../../layouts/MainLayout';
 import client from '../../lib/prismadb';
 import { RootState } from '../../store/store';
 import { IAddress } from '../../types/User';
 import { authOptions } from '../api/auth/[...nextauth]';
+import { cleanCart } from '../../features/cartSlice';
+import { useAppDispatch } from '../../store/store';
+import { orderingProduct } from '../../lib/hot-toast';
 
 const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
   const [paymentMethod, setPaymentMethod] = useState('');
+  const [sendingOrder, setSendingOrder] = useState(false);
 
   const { order, totalAmt } = useSelector((state: RootState) => state.cart);
 
-  // const { data: session, status  } = useSession();
+  const dispatch = useAppDispatch()
+  const router = useRouter()
 
-  // const router = useRouter();
 
-  // useEffect(() => {
-  //   if ((status !== 'loading') && !session) {
-  //     router.push('/signin?callback=/checkout');
-  //   }
-  // }, [session, router,status]);
+  const handleSubmit = async () => {
+    setSendingOrder(true);
+    try {
+      await toast.promise(axios.post('/api/order', { order, paymentMethod }), orderingProduct);
+
+      setTimeout(()=> {
+        dispatch(cleanCart());
+        setPaymentMethod('');
+        router.push('/sauces');
+        setSendingOrder(false);
+      }, 3000 )
+
+    } catch (error) {
+      console.log(error);
+      setSendingOrder(false);
+    } 
+  };
 
   return (
     <>
+      <Toaster position='top-center' reverseOrder={false} />
       <section className='mx-auto w-full flex gap-4 flex-col items-start justify-center sm:flex-row mt-6 px-2 '>
         <div className=' w-full sm:w-5/12 md:w-4/12 p1 rounded-md bg-white shadow-md'>
           <div className='p-3 space-y-4'>
@@ -56,21 +73,37 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
                 )}
               </div>
             </div>
-            <div className='space-y-2'>
-              <h2 className='font-semibold'>Payment Method</h2>
-              <div className='flex gap-2 items-center'>
-                <label htmlFor='paymentMethod' className='text-sm'>
-                  On Delivery
-                </label>
-                <input
-                  type='radio'
-                  id='paymentMethod'
-                  className='accent-primary-500'
-                  value='on delivery'
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                  disabled={order.length === 0}
-                />
-              </div>
+            <div>
+              <h2 className='font-semibold mb-1'>Payment Method</h2>
+              <fieldset
+                disabled={order.length === 0 || sendingOrder}
+                className='flex flex-col gap-2'
+              >
+                <p className='text-sm'>On Delivery</p>
+                <div className='flex gap-2 items-center'>
+                  <input
+                    type='radio'
+                    id='paymentMethod'
+                    name='paymentMethod'
+                    className='accent-primary-500'
+                    value='cash'
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  />
+                  <label htmlFor='paymentMethod'>Cash</label>
+                </div>
+                <div className='flex gap-2 items-center'>
+                  <input
+                    type='radio'
+                    id='paymentMethod'
+                    name='paymentMethod'
+                    className='accent-primary-500'
+                    value='credit card'
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    disabled={order.length === 0 || sendingOrder}
+                  />
+                  <label htmlFor='paymentMethod'>Credit card</label>
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>
@@ -98,7 +131,7 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
                       </div>
                     </div>
                     <span className='text-sm flex-1 text-right'>
-                      x {product.qty}
+                      x {product.quantity}
                     </span>
                   </div>
                 ))}
@@ -107,10 +140,10 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
                 </div>
                 <div className='pt-2'>
                   <Button
-                    onClick={() => {}}
+                    onClick={handleSubmit}
                     className='bg-primary-500 rounded hover:bg-primary-600 w-full text-white disabled:bg-slate-400'
                     title='SEND'
-                    disabled={!paymentMethod || !paymentMethod}
+                    disabled={!paymentMethod || sendingOrder}
                   />
                 </div>
               </>
