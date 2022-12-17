@@ -60,7 +60,7 @@ const Sidebar = () => {
                 href={`/${menuItem.path}`}
               >
                 {menuItems[index]?.icon}
-                <span className='text-xs'>{menuItem?.item}</span>
+                <span className='text-2xs md:text-xs'>{menuItem?.item}</span>
               </Link>
               <span
                 className={`
