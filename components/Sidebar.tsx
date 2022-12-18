@@ -5,41 +5,27 @@ import { useSession, signOut } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store/store';
 import { toggleShowCart } from '../features/showCartSlice';
-import {
-  FaCarrot,
-  FaCheese,
-  FaSeedling,
-  FaWineBottle,
-  FaAppleAlt,
-  FaShoppingCart,
-} from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
 import { RiAdminFill, RiUserFill } from 'react-icons/ri';
-
-const menuItems = [
-  { item: 'sauces', icon: <FaWineBottle size={18} />, path: 'sauces' },
-  { item: 'veggies', icon: <FaCarrot size={18} />, path: 'veggies' },
-  { item: 'cheese', icon: <FaCheese size={15} />, path: 'cheese' },
-  { item: 'crunch', icon: <FaSeedling size={18} />, path: 'crunch' },
-  { item: 'extras', icon: <FaAppleAlt size={18} />, path: 'extras' },
-];
+import { menuItems } from '../utils/menu';
+import LoadingIcons from 'react-loading-icons'
 
 const Sidebar = () => {
   const router = useRouter();
-
   const { pathname } = router;
 
-  const callback = pathname.substring(1)
-  
   const { data: session, status } = useSession();
-
+  
   const dispatch = useAppDispatch();
-
   const cartItems = useSelector((state: RootState) => state.cart.order);
+  
+  const callback = pathname.substring(1)
 
   const handleShowCart = () => {
     dispatch(toggleShowCart(true));
   };
+
 
   return (
     <nav className='bg-gradient-to-b from-primary-600 to-primary-500 w-16 md:w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
@@ -87,9 +73,11 @@ const Sidebar = () => {
         </ul>
       </div>
 
-      <div className='flex flex-col space-y-4'>
-        {status !== 'loading' &&
-          (session ? (
+      <div className='flex flex-col items-center space-y-4'>
+
+         {status === 'loading' && <LoadingIcons.Circles height={24} width={24} />}
+        
+          {(session && (
             <>
               {session?.user.role === 'admin' ? (
                 <Link
@@ -108,11 +96,15 @@ const Sidebar = () => {
                   <span className='text-xs'>Account</span>
                 </Link>
               )}
-              <button onClick={() => signOut()} className='mx-auto '>
+              <button onClick={() => signOut()} className='mx-auto flex flex-col items-center gap-1'>
                 <IoLogOut size={24} />
+                  <span className='text-xs'>Logout</span>
               </button>
             </>
-          ) : (
+          ))}
+
+           {(status !== 'loading') && !session &&
+           
             <Link
               href={`/signin?callback=${callback}`}
               className='flex flex-col items-center gap-1'
@@ -120,7 +112,8 @@ const Sidebar = () => {
               <RiUserFill size={24} />
               <span className='text-xs'>Login</span>
             </Link>
-          ))}
+          
+           }
       </div>
     </nav>
   );
