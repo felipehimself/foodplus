@@ -20,8 +20,8 @@ const ProductCard = ({ id, price, imageUrl, name, productId, category }: IProduc
         className='p-2 rounded-md bg-white shadow-md hover:shadow-lg transition-all relative flex items-center justify-between w-52 h-40'
         key={id}
       >
-        <span className='text-2xs rounded-sm flex items-center justify-center  bg-accent-400 text-white w-10 h-6 absolute -top-3 -right-2 shadow-md'>
-          $ {price}
+        <span className='text-2xs rounded-sm flex items-center justify-center  bg-accent-400 text-white w-11 h-6 absolute -top-3 -right-2 shadow-md'>
+          $ {price.toFixed(2)}
         </span>
         <div>
           <Image src={imageUrl} alt={name} width={100} height={100} />
