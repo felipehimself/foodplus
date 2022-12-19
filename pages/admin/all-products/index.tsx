@@ -11,10 +11,13 @@ import { MdEditNote, MdDelete } from 'react-icons/md';
 import toast, { Toaster } from 'react-hot-toast';
 import MainLayout from '../../../layouts/MainLayout';
 import { deletingProduct } from '../../../lib/hot-toast';
+import { useRouter } from 'next/router';
 
 const AllProducts = ({ products }: { products: IProduct[] }) => {
   const [allProducts, setAllProducts] = useState(products);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const router = useRouter()
 
   const header = [
     'Product Id',
@@ -102,12 +105,15 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
                       </td>
                       <td className='px-6 text-ellipsis overflow-hidden w-10 py-4 whitespace-nowrap text-xs font-medium text-gray-900'>
                         <div className='flex items-center gap-2'>
-                          <Link
-                            href={`/admin/edit-product/${product.productId}`}
-                            title='Edit'
+                          <button
+                          onClick={()=>router.push(`/admin/edit-product/${product.productId}`)}
+                          disabled={isDeleting}
+                          title='Edit'
                           >
-                            <MdEditNote size={24} />
-                          </Link>
+                            <MdEditNote  className={
+                                isDeleting ? 'fill-zinc-400' : 'fill-zinc-700'
+                              } size={24} />
+                          </button>
                           <button
                             disabled={isDeleting}
                             onClick={() =>
