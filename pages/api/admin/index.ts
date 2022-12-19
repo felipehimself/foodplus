@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { unstable_getServerSession } from 'next-auth';
 import client from '../../../lib/prismadb';
+import { authOptions } from '../auth/[...nextauth]';
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -19,7 +21,17 @@ export default async function handler(
   req: CustomNextApiRequest,
   res: NextApiResponse
 ) {
+
+  const session = await unstable_getServerSession(req, res, authOptions);
+
+  if(!session || !session.user.role){
+    res.status(401).json({ message: 'Unauthorized' });
+    return
+  }
+
   if (req.method === 'POST') {
+    console.log(session)
+
     const { name, price, imageId, imageUrl, category } = req.body;
 
     if (!category || !name || !price || !imageId || !imageUrl) {
