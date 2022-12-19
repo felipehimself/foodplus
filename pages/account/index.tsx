@@ -67,13 +67,11 @@ const Account = ({ userData,  groupedOrders }: IProps) => {
     <>
       <Toaster position='top-center' reverseOrder={false} />
       <section className='mx-auto w-full md:w-8/12 mt-4 px-2'>
-        <h2 className='text-lg text-center mb-2'>Account</h2>
-        <hr />
         <div className='flex justify-around'>
           <button
             onClick={() => setActiveTab('info')}
             className={`border-b-2 transition-all ${
-              activeTab === 'info' && 'border-primary-400'
+              activeTab === 'info' && 'border-primary-400 font-semibold'
             }  w-full py-3`}
           >
             Info
@@ -81,7 +79,7 @@ const Account = ({ userData,  groupedOrders }: IProps) => {
           <button
             onClick={() => setActiveTab('orders')}
             className={`border-b-2 transition-all ${
-              activeTab === 'orders' && 'border-primary-400'
+              activeTab === 'orders' && 'border-primary-400 font-semibold'
             }  w-full py-3`}
           >
             Orders
