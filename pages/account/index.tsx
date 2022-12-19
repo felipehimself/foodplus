@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { unstable_getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]';
 import { IUserData } from '../../types/User';
 import { MdEditNote } from 'react-icons/md';
 import client from '../../lib/prismadb';
@@ -16,14 +14,14 @@ import { toast, Toaster } from 'react-hot-toast';
 import { savingAddress } from '../../lib/hot-toast';
 import { IUserOrders } from '../../types/Order';
 import CardOrder from '../../components/CardOrder';
+import { getSession } from 'next-auth/react';
 
 interface IProps {
-  userData: IUserData;
-  userAddress: null | IAddress;
+  userData: IUserData & { address: IAddress | null };
   groupedOrders: IUserOrders[];
 }
 
-const Account = ({ userData, userAddress, groupedOrders }: IProps) => {
+const Account = ({ userData,  groupedOrders }: IProps) => {
   const [activeTab, setActiveTab] = useState('info');
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -34,7 +32,7 @@ const Account = ({ userData, userAddress, groupedOrders }: IProps) => {
     clearErrors,
     reset,
   } = useForm<IAddress>({
-    defaultValues: userAddress ? userAddress : {},
+    defaultValues: userData.address ? userData.address : {},
     resolver: yupResolver(userAddressValidation),
   });
 
@@ -43,7 +41,7 @@ const Account = ({ userData, userAddress, groupedOrders }: IProps) => {
     clearErrors();
 
     try {
-      if (!userAddress) {
+      if (!userData.address) {
         // register address for the first time
         await toast.promise(axios.post('/api/user', data), savingAddress);
       } else {
@@ -246,12 +244,9 @@ Account.PageLayout = MainLayout;
 export default Account;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await unstable_getServerSession(
-    ctx.req,
-    ctx.res,
-    authOptions
-  );
 
+  const session = await getSession(ctx);
+  
   if (!session?.user.email) {
     return {
       redirect: {
@@ -261,18 +256,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  // TODO: POSSO FAZER UM JOIN AQUI E TRAZER DADOS NUMA SÓ QUERY?
+
   const userData = await client.user.findUnique({
     where: {
       email: session?.user.email!,
     },
-  });
-
-  const userAddress = await client.address.findUnique({
-    where: {
-      userId: session?.user.email!,
-    },
-  });
+    include: {
+      address: true
+    }
+  })
 
   const orders = await client.userOrder.findMany({
     where: {
@@ -317,7 +309,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       userData,
-      userAddress,
       groupedOrders: JSON.parse(JSON.stringify(groupedOrders)),
     },
   };
