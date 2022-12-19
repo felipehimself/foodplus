@@ -74,15 +74,13 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
       await toast.promise(
         axios.post('/api/admin', product), savingProduct);
 
-      // await axios.post('/api/admin', product);
       handleDeleteImg();
       reset();
       setIsPostingProd(false);
       setFormData(null);
-      toast.success('Product saved!');
+      
     } catch (error) {
       setIsPostingProd(false);
-
       toast.error('Something went wrong!');
       console.log(error);
     }
@@ -169,7 +167,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
           <Button
             title='SEND'
             onClick={() => {}}
-            className='bg-primary-500 text-white rounded  hover:bg-primary-600'
+            className='disabled:bg-slate-400 bg-primary-500 text-white rounded  hover:bg-primary-600'
           />
         </fieldset>
       </form>
