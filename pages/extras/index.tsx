@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import ProductCard from '../../components/ProductCard';
+import CardProduct from '../../components/CardProduct';
 import ProductContainer from '../../components/ProductContainer';
 import client from '../../lib/prismadb';
 import { IProduct } from '../../types/Product';
@@ -9,7 +9,7 @@ const Extras = ({ extras }: { extras: IProduct[] }) => {
   return (
     <ProductContainer>
       {extras.map((extra) => (
-        <ProductCard key={extra.id} {...extra} />
+        <CardProduct key={extra.id} {...extra} />
       ))}
     </ProductContainer>
   );
