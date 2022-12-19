@@ -16,6 +16,7 @@ import { authOptions } from '../api/auth/[...nextauth]';
 import { cleanCart } from '../../features/cartSlice';
 import { useAppDispatch } from '../../store/store';
 import { orderingProduct } from '../../lib/hot-toast';
+import CardOrder from '../../components/CardOrder';
 
 const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -115,25 +116,7 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
             {order.length > 0 ? (
               <>
                 {order.map((product) => (
-                  <div className='flex gap-2 items-end' key={product.id}>
-                    <div className='-mb-2'>
-                      <Image
-                        src={product.imageUrl}
-                        width={60}
-                        height={60}
-                        alt={product.name}
-                      />
-                    </div>
-                    <div className='flex text-sm  items-end'>
-                      <div>
-                        <p>{product.name}</p>
-                        <p>$ {product.price.toFixed(2)}</p>
-                      </div>
-                    </div>
-                    <span className='text-sm flex-1 text-right'>
-                      x {product.quantity}
-                    </span>
-                  </div>
+                  <CardOrder key={product.productId} {...product} />
                 ))}
                 <div className='flex font-semibold justify-between pt-3'>
                   <span>Total</span> <span>$ {totalAmt.toFixed(2)}</span>
