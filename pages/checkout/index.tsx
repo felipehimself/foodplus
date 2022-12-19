@@ -17,6 +17,7 @@ import { cleanCart } from '../../features/cartSlice';
 import { useAppDispatch } from '../../store/store';
 import { orderingProduct } from '../../lib/hot-toast';
 import CardOrder from '../../components/CardOrder';
+import Head from 'next/head';
 
 const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -48,6 +49,10 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
 
   return (
     <>
+     <Head>
+        <title>Checkout</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
       <Toaster position='top-center' reverseOrder={false} />
       <section className='mx-auto w-full flex gap-4 flex-col items-start justify-center sm:flex-row mt-6 px-2 '>
         <div className=' w-full sm:w-5/12 md:w-4/12 p1 rounded-md bg-white shadow-md'>

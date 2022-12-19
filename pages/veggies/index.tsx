@@ -4,14 +4,21 @@ import CardProduct from '../../components/CardProduct';
 import ProductContainer from '../../components/ProductContainer';
 import client from '../../lib/prismadb';
 import { CartLayout } from '../../layouts/CartLayout';
+import Head from 'next/head';
 
 const Veggie = ({ veggies }: { veggies: IProduct[] }) => {
   return (
-    <ProductContainer>
-      {veggies.map((veggie) => (
-        <CardProduct key={veggie.id} {...veggie} />
-      ))}
-    </ProductContainer>
+    <>
+      <Head>
+        <title>Veggie</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
+      <ProductContainer>
+        {veggies.map((veggie) => (
+          <CardProduct key={veggie.id} {...veggie} />
+        ))}
+      </ProductContainer>
+    </>
   );
 };
 

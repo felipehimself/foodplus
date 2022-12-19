@@ -15,6 +15,7 @@ import { MdClose } from 'react-icons/md';
 import Button from '../../../components/Button';
 import MainLayout from '../../../layouts/MainLayout';
 import { savingProduct } from '../../../lib/hot-toast';
+import Head from 'next/head';
 
 const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   const [isPostingProd, setIsPostingProd] = useState(false);
@@ -87,6 +88,11 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
   };
 
   return (
+    <>
+     <Head>
+        <title>Add Product</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
     <AdminContainer>
       <Toaster position='top-center' reverseOrder={false} />
       <AdminHeading title='Add Product' />
@@ -171,7 +177,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
           />
         </fieldset>
       </form>
-    </AdminContainer>
+    </AdminContainer></>
   );
 };
 export default AddProduct;

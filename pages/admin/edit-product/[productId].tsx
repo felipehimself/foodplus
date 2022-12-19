@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import MainLayout from '../../../layouts/MainLayout';
+import Head from 'next/head';
 
 
 const EditProduct = ({ product, productList }: { product: IProduct, productList: ICategory[] }) => {
@@ -112,6 +113,11 @@ const EditProduct = ({ product, productList }: { product: IProduct, productList:
   };
 
   return (
+    <>
+     <Head>
+        <title>Edit Product</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
     <AdminContainer>
       <Toaster position='top-right' reverseOrder={false} />
       <AdminHeading title='Edit Product' />
@@ -226,7 +232,7 @@ const EditProduct = ({ product, productList }: { product: IProduct, productList:
           </button>
         </fieldset>
       </form>
-    </AdminContainer>
+    </AdminContainer></>
   );
 };
 export default EditProduct;

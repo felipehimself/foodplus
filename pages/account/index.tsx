@@ -16,13 +16,14 @@ import { IUserOrders } from '../../types/Order';
 import CardOrder from '../../components/CardOrder';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
+import Head from 'next/head';
 
 interface IProps {
   userData: IUserData & { address: IAddress | null };
   groupedOrders: IUserOrders[];
 }
 
-const Account = ({ userData,  groupedOrders }: IProps) => {
+const Account = ({ userData, groupedOrders }: IProps) => {
   const [activeTab, setActiveTab] = useState('info');
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -65,6 +66,10 @@ const Account = ({ userData,  groupedOrders }: IProps) => {
 
   return (
     <>
+      <Head>
+        <title>Account</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
       <Toaster position='top-center' reverseOrder={false} />
       <section className='mx-auto w-full md:w-8/12 mt-4 px-2'>
         <div className='flex justify-around'>
@@ -243,10 +248,12 @@ Account.PageLayout = MainLayout;
 export default Account;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await unstable_getServerSession(
+    ctx.req,
+    ctx.res,
+    authOptions
+  );
 
-  const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
-
-  
   if (!session?.user.email) {
     return {
       redirect: {
@@ -256,15 +263,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-
   const userData = await client.user.findUnique({
     where: {
       email: session?.user.email!,
     },
     include: {
-      address: true
-    }
-  })
+      address: true,
+    },
+  });
 
   const orders = await client.userOrder.findMany({
     where: {
