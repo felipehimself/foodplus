@@ -93,7 +93,7 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
       <form onSubmit={handleSubmit(onSubmit)} className='px-2 '>
         <fieldset
           disabled={isPostingProd}
-          className='mx-auto lg:w-4/12 flex flex-col gap-5 group'
+          className='mx-auto md:w-8/12 lg:w-4/12 flex flex-col gap-5 group'
         >
           <div className='flex flex-col gap-2 text-sm'>
             <label htmlFor='type'>Category</label>
