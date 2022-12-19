@@ -1,11 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import client from '../../../lib/prismadb';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const session = await unstable_getServerSession(req, res, authOptions)
+
   if (req.method === 'POST') {
     const { street, number, city, state } = req.body;
 
@@ -15,7 +18,8 @@ export default async function handler(
     }
 
     try {
-      const session = await getSession({ req });
+
+      
       await client.address.create({
         data: {
           userId: session?.user.email!,
@@ -42,7 +46,7 @@ export default async function handler(
     }
 
     try {
-      const session = await getSession({ req });
+      
       await client.address.update({
         where: {
           userId: session?.user.email!,

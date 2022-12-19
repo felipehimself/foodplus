@@ -1,13 +1,16 @@
 import { NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import { v4 as uuid } from 'uuid';
 import { CustomOrderReq } from '../../../types/Request';
 import client from '../../../lib/prismadb';
+import { authOptions } from '../auth/[...nextauth]';
+import { unstable_getServerSession } from 'next-auth';
 
 export default async function handler(
   req: CustomOrderReq,
   res: NextApiResponse
 ) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+
   if (req.method === 'POST') {
     const { order, paymentMethod } = req.body;
 
@@ -17,7 +20,6 @@ export default async function handler(
     }
 
     try {
-      const session = await getSession({ req });
       const orderId = uuid();
       const orderComplete = order.map(
         ({ category, imageId, imageUrl, name, price, ...rest }) => ({

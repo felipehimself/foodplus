@@ -1,9 +1,11 @@
-import { getProviders, getSession, signIn, useSession } from 'next-auth/react';
+import { getProviders, signIn, useSession } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
 import { BsGithub } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import MainLayout from '../layouts/MainLayout';
+import { authOptions } from './api/auth/[...nextauth]';
+import { unstable_getServerSession } from 'next-auth';
 
 const icons = {
   google: {
@@ -71,8 +73,8 @@ SignIn.PageLayout = MainLayout
 export default SignIn
 
 export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
-    
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+
     if (session) {
       return {
         redirect: {

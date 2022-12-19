@@ -14,7 +14,8 @@ import { toast, Toaster } from 'react-hot-toast';
 import { savingAddress } from '../../lib/hot-toast';
 import { IUserOrders } from '../../types/Order';
 import CardOrder from '../../components/CardOrder';
-import { getSession } from 'next-auth/react';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 interface IProps {
   userData: IUserData & { address: IAddress | null };
@@ -245,7 +246,8 @@ export default Account;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-  const session = await getSession(ctx);
+  const session = await unstable_getServerSession(ctx.req, ctx.res, authOptions)
+
   
   if (!session?.user.email) {
     return {
