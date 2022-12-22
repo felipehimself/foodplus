@@ -30,7 +30,6 @@ export default async function handler(
   }
 
   if (req.method === 'POST') {
-    console.log(session)
 
     const { name, price, imageId, imageUrl, category } = req.body;
 
