@@ -7,8 +7,7 @@ import store from '../store/store';
 import useIsPageLoading from '../hooks/useIsLoading';
 import PageLoading from '../components/PageLoading';
 import { Inter } from '@next/font/google';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +26,8 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
+      <Toaster position='top-center' reverseOrder={false} />
+
       <Provider store={store}>
         {isLoading && <PageLoading />}
         <main className={inter.className}>

@@ -9,7 +9,7 @@ import { userAddressValidation } from '../../lib/yup';
 import Button from '../../components/Button';
 import MainLayout from '../../layouts/MainLayout';
 import axios from 'axios';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { savingAddress } from '../../lib/hot-toast';
 import { IUserOrders } from '../../interfaces/Order';
 import CardOrder from '../../components/CardOrder';
@@ -65,7 +65,6 @@ const Account = ({ userData, groupedOrders }: IAccount) => {
         <title>Account</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
-      <Toaster position='top-center' reverseOrder={false} />
       <section className='mx-auto w-full md:w-8/12 mt-4 px-2'>
         <div className='flex justify-around'>
           <button

@@ -54,7 +54,7 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
         <title>Checkout</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
-      <Toaster position='top-center' reverseOrder={false} />
+      {/* <Toaster position='top-center' reverseOrder={false} /> */}
       <section className='mx-auto w-full flex gap-4 flex-col items-start justify-center sm:flex-row mt-6 px-2 '>
         <div className=' w-full sm:w-5/12 md:w-4/12 p1 rounded-md bg-white shadow-md'>
           <div className='p-3 space-y-4'>

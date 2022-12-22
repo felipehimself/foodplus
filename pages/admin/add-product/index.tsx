@@ -9,7 +9,7 @@ import axios from 'axios';
 import AdminHeading from '../../../components/AdminHeading';
 import AdminContainer from '../../../components/AdminContainer';
 import client from '../../../lib/prismadb';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
 import Button from '../../../components/Button';
@@ -92,7 +92,6 @@ const AddProduct = ({ productList }: { productList: ICategory[] }) => {
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <AdminContainer>
-        <Toaster position='top-center' reverseOrder={false} />
         <AdminHeading title='Add Product' />
         <form onSubmit={handleSubmit(onSubmit)} className='px-2 '>
           <fieldset

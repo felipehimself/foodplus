@@ -8,7 +8,7 @@ import AdminHeading from '../../../components/AdminHeading';
 import client from '../../../lib/prismadb';
 import axios from 'axios';
 import { MdEditNote, MdDelete } from 'react-icons/md';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import MainLayout from '../../../layouts/MainLayout';
 import { deletingProduct } from '../../../lib/hot-toast';
 import { useRouter } from 'next/router';
@@ -53,7 +53,6 @@ const AllProducts = ({ products }: { products: IProduct[] }) => {
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <AdminContainer>
-        <Toaster position='top-center' reverseOrder={false} />
         <AdminHeading title='All Products' />
         <div className='flex flex-col '>
           <div className='overflow-x-auto'>

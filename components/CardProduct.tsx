@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { IProduct } from '../interfaces/Product';
 import { useAppDispatch } from '../store/store';
 import { addToCart } from '../features/cartSlice';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const CardProduct = ({
   id,
@@ -27,7 +27,6 @@ const CardProduct = ({
 
   return (
     <>
-      <Toaster position='top-right' reverseOrder={false} />
       <button
         onClick={() =>
           handleAddToCart(price, name, productId, category, imageUrl)

@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { productValidation } from '../../../lib/yup';
 import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import Image from 'next/image';
 import { MdClose } from 'react-icons/md';
 import { useRouter } from 'next/router';
@@ -119,7 +119,6 @@ const EditProduct = ({
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
       <AdminContainer>
-        <Toaster position='top-right' reverseOrder={false} />
         <AdminHeading title='Edit Product' />
         <form onSubmit={handleSubmit(onSubmit)} className='px-2'>
           <fieldset

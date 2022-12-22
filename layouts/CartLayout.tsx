@@ -8,7 +8,7 @@ import MobileNavbar from '../components/MobileNavbar';
 import MobileCart from '../components/MobileCart';
 import { useRouter } from 'next/router';
 import { cleanCart, removeFromCart } from '../features/cartSlice';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { toggleShowCart } from '../features/showCartSlice';
 
 export const CartLayout = ({ children }: { children: React.ReactNode }) => {
@@ -38,8 +38,6 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <MobileNavbar />
       <div className='flex'>
-        <Toaster position='top-right' reverseOrder={false} />
-
         <Sidebar />
         <MobileTab />
         <MobileCart
