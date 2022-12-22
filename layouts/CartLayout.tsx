@@ -1,24 +1,61 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Cart from '../components/Cart';
-import { RootState } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
 import Sidebar from '../components/Sidebar';
 import MobileTab from '../components/MobileTab';
 import MobileNavbar from '../components/MobileNavbar';
 import MobileCart from '../components/MobileCart';
+import { useRouter } from 'next/router';
+import { cleanCart, removeFromCart } from '../features/cartSlice';
+import { toast, Toaster } from 'react-hot-toast';
+import { toggleShowCart } from '../features/showCartSlice';
 
 export const CartLayout = ({ children }: { children: React.ReactNode }) => {
-  
   const { showCart } = useSelector((state: RootState) => state.showCart);
+
+  const { cart } = useSelector((state: RootState) => state);
+  const dispatch = useAppDispatch();
+
+  const router = useRouter();
+
+  const handleRemoveFromCart = (productId: string) => {
+    dispatch(removeFromCart({ productId }));
+    toast.success('Item removed!');
+  };
+
+  const handleCancel = () => {
+    dispatch(cleanCart());
+    toast.success('Your cart was cleaned!');
+  };
+
+  const handleCheckout = () => {
+    router.push('/checkout');
+  };
+  const handleCloseCart = () => dispatch(toggleShowCart(false));
 
   return (
     <>
       <MobileNavbar />
       <div className='flex'>
+        <Toaster position='top-right' reverseOrder={false} />
+
         <Sidebar />
         <MobileTab />
-        <MobileCart showCart={showCart} />
-        <Cart />
+        <MobileCart
+          cart={cart}
+          handleRemoveFromCart={handleRemoveFromCart}
+          handleCancel={handleCancel}
+          handleCheckout={handleCheckout}
+          handleCloseCart={handleCloseCart}
+          showCart={showCart}
+        />
+        <Cart
+          cart={cart}
+          handleRemoveFromCart={handleRemoveFromCart}
+          handleCancel={handleCancel}
+          handleCheckout={handleCheckout}
+        />
         <div className='w-full h-screen overflow-y-auto py-2 px-6'>
           {children}
         </div>

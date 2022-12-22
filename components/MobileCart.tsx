@@ -1,44 +1,19 @@
-import Image from 'next/image';
 import Button from './Button';
-import img from './..//public/image.jpeg';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { MdClose } from 'react-icons/md';
-import { useAppDispatch } from '../store/store';
-import { removeFromCart, cleanCart } from '../features/cartSlice';
-import { toggleShowCart } from '../features/showCartSlice';
 const { motion, AnimatePresence } = require('framer-motion');
 
-import toast, { Toaster } from 'react-hot-toast';
-import { useRouter } from 'next/router';
+import { ICartProps } from '../interfaces/Props';
 
-const MobileCart = ({ showCart }: { showCart: boolean }) => {
-  const { cart } = useSelector((state: RootState) => state);
-  const dispatch = useAppDispatch();
-
-  const router = useRouter();
-
-  const handleRemoveFromCart = (productId: string) => {
-    dispatch(removeFromCart({ productId }));
-    toast.success('Item removed!');
-  };
-
-  const handleCancel = () => {
-    dispatch(cleanCart());
-    handleCloseCart()
-    toast.success('Your cart was cleaned!');
-  };
-
-  const handleCheckout = () => {
-    router.push('/checkout');
-  };
-
-  const handleCloseCart = () => dispatch(toggleShowCart(false));
-
+const MobileCart = ({
+  cart,
+  handleCancel,
+  handleCheckout,
+  handleCloseCart,
+  showCart,
+  handleRemoveFromCart,
+}: ICartProps) => {
   return (
     <>
-      <Toaster position='top-right' reverseOrder={false} />
-
       <AnimatePresence>
         {showCart && (
           <div

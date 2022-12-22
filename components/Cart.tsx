@@ -1,40 +1,18 @@
 import Image from 'next/image';
 import Button from './Button';
 import img from './..//public/image.jpeg';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { MdClose } from 'react-icons/md';
-import { useAppDispatch } from '../store/store';
-import { removeFromCart, cleanCart } from '../features/cartSlice';
-
 const { motion, AnimatePresence } = require('framer-motion');
+import { ICartProps } from '../interfaces/Props';
 
-import toast, { Toaster } from 'react-hot-toast';
-import { useRouter } from 'next/router';
-
-const Cart = () => {
-  const { cart } = useSelector((state: RootState) => state);
-  const dispatch = useAppDispatch();
-
-  const router = useRouter();
-
-  const handleRemoveFromCart = (productId: string) => {
-    dispatch(removeFromCart({ productId }));
-    toast.success('Item removed!');
-  };
-
-  const handleCancel = () => {
-    dispatch(cleanCart());
-    toast.success('Your cart was cleaned!');
-  };
-
-  const handleCheckout = () => {
-    router.push('/checkout');
-  };
-  
+const Cart = ({
+  cart,
+  handleCancel,
+  handleCheckout,
+  handleRemoveFromCart,
+}: ICartProps) => {
   return (
     <>
-      <Toaster position='top-right' reverseOrder={false} />
       <div className='text-sm w-80 px-4 pb-4 h-screen bg-zinc-50 hidden overflow-y-hidden flex-col gap-1 shadow-lg ml-[5rem] md:flex'>
         <div>
           <Image
