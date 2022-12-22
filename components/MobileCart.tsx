@@ -25,6 +25,7 @@ const MobileCart = ({ showCart }: { showCart: boolean }) => {
 
   const handleCancel = () => {
     dispatch(cleanCart());
+    handleCloseCart()
     toast.success('Your cart was cleaned!');
   };
 
@@ -32,7 +33,7 @@ const MobileCart = ({ showCart }: { showCart: boolean }) => {
     router.push('/checkout');
   };
 
-  const handleShowCart = () => dispatch(toggleShowCart(false));
+  const handleCloseCart = () => dispatch(toggleShowCart(false));
 
   return (
     <>
@@ -41,7 +42,7 @@ const MobileCart = ({ showCart }: { showCart: boolean }) => {
       <AnimatePresence>
         {showCart && (
           <div
-            onClick={handleShowCart}
+            onClick={handleCloseCart}
             className='md:hidden flex backdrop-blur-[1px] bg-[rgba(0,0,0,0.2)] justify-center fixed inset-0 z-50'
           >
             <motion.div
@@ -56,7 +57,7 @@ const MobileCart = ({ showCart }: { showCart: boolean }) => {
                     
                     '
             >
-              <button onClick={handleShowCart} className='self-end p-1'>
+              <button onClick={handleCloseCart} className='self-end p-1'>
                 <MdClose size={20} />
               </button>
               <h3 className='text-center text-lg  font-semibold'>
