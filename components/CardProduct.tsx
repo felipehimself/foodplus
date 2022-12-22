@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { IProduct } from '../types/Product';
+import { IProduct } from '../interfaces/Product';
 import { useAppDispatch } from '../store/store';
 import { addToCart } from '../features/cartSlice';
 import toast, { Toaster } from 'react-hot-toast';

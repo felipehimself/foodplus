@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import { v4 as uuid } from 'uuid';
-import { CustomOrderReq } from '../../../types/Request';
+import { CustomOrderReq } from '../../../interfaces/Request';
 import client from '../../../lib/prismadb';
 import { authOptions } from '../auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth';

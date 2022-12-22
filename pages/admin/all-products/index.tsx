@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { IProduct } from '../../../types/Product';
+import { IProduct } from '../../../interfaces/Product';
 import AdminContainer from '../../../components/AdminContainer';
 import AdminHeading from '../../../components/AdminHeading';
 import client from '../../../lib/prismadb';

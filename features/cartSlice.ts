@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ICart } from '../types/Cart';
+import { ICart } from '../interfaces/Cart';
 
 const initialState: ICart = {
   order: [],
@@ -33,8 +33,10 @@ const cartSlice = createSlice({
     },
 
     removeFromCart: (state, action) => {
-      const product = state.order.find((prod) => prod.productId === action.payload.productId);
-      state.totalAmt = state.totalAmt - product?.price!
+      const product = state.order.find(
+        (prod) => prod.productId === action.payload.productId
+      );
+      state.totalAmt = state.totalAmt - product?.price!;
 
       if (product?.quantity == 1) {
         const newState = state.order.filter(
@@ -52,10 +54,10 @@ const cartSlice = createSlice({
       }
     },
 
-    cleanCart:(state) => {
-      state.order = []
-      state.totalAmt = 0
-    }
+    cleanCart: (state) => {
+      state.order = [];
+      state.totalAmt = 0;
+    },
   },
 });
 

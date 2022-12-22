@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { IItems, IOrder } from './../types/Order';
+import { IItems, IOrder } from '../interfaces/Order';
 
 const CardOrder = ({ imageUrl, name, price, quantity }: IOrder | IItems) => {
   return (

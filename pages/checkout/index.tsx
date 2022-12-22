@@ -11,7 +11,7 @@ import Button from '../../components/Button';
 import MainLayout from '../../layouts/MainLayout';
 import client from '../../lib/prismadb';
 import { RootState } from '../../store/store';
-import { IAddress } from '../../types/User';
+import { IAddress } from '../../interfaces/User';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { cleanCart } from '../../features/cartSlice';
 import { useAppDispatch } from '../../store/store';
@@ -25,31 +25,32 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
 
   const { order, totalAmt } = useSelector((state: RootState) => state.cart);
 
-  const dispatch = useAppDispatch()
-  const router = useRouter()
-
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleSubmit = async () => {
     setSendingOrder(true);
     try {
-      await toast.promise(axios.post('/api/order', { order, paymentMethod }), orderingProduct);
+      await toast.promise(
+        axios.post('/api/order', { order, paymentMethod }),
+        orderingProduct
+      );
 
-      setTimeout(()=> {
+      setTimeout(() => {
         dispatch(cleanCart());
         setPaymentMethod('');
         router.push('/sauces');
         setSendingOrder(false);
-      }, 3000 )
-
+      }, 3000);
     } catch (error) {
       console.log(error);
       setSendingOrder(false);
-    } 
+    }
   };
 
   return (
     <>
-     <Head>
+      <Head>
         <title>Checkout</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
