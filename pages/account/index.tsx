@@ -1,29 +1,24 @@
 import { useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { IUserData } from '../../types/User';
 import { MdEditNote } from 'react-icons/md';
 import client from '../../lib/prismadb';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { IAddress } from '../../types/User';
+import { IAddress } from '../../interfaces/User';
 import { userAddressValidation } from '../../lib/yup';
 import Button from '../../components/Button';
 import MainLayout from '../../layouts/MainLayout';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
 import { savingAddress } from '../../lib/hot-toast';
-import { IUserOrders } from '../../types/Order';
+import { IUserOrders } from '../../interfaces/Order';
 import CardOrder from '../../components/CardOrder';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
 import Head from 'next/head';
+import { IAccount } from '../../interfaces/Props';
 
-interface IProps {
-  userData: IUserData & { address: IAddress | null };
-  groupedOrders: IUserOrders[];
-}
-
-const Account = ({ userData, groupedOrders }: IProps) => {
+const Account = ({ userData, groupedOrders }: IAccount) => {
   const [activeTab, setActiveTab] = useState('info');
   const [isDisabled, setIsDisabled] = useState(true);
 

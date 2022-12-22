@@ -1,11 +1,6 @@
-interface IProps {
-  title: string;
-  className?: string;
-  onClick: Function;
-  type?: 'submit' | 'button';
-  disabled?:boolean
-}
-const Button = ({ title, className, onClick, type, disabled }: IProps) => {
+import { IButton } from '../interfaces/Props';
+
+const Button = ({ title, className, onClick, type, disabled }: IButton) => {
   return (
     <button
       onClick={() => onClick()}

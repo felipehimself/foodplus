@@ -1,12 +1,6 @@
-import Link from 'next/link';
-import { MdArrowBack } from 'react-icons/md';
+import { IAdminHeading } from '../interfaces/Props';
 
-interface IProps {
-  title: string;
-  width?: string;
-}
-
-const AdminHeading = ({ title, width }: IProps) => {
+const AdminHeading = ({ title, width }: IAdminHeading) => {
   return (
     <div
       className={`flex mb-4 relative justify-center items-center ${
