@@ -7,14 +7,12 @@ import { MdClose } from 'react-icons/md';
 import { useAppDispatch } from '../store/store';
 import { removeFromCart, cleanCart } from '../features/cartSlice';
 
-
-
 const { motion, AnimatePresence } = require('framer-motion');
 
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 
-const Cart = ({ showCart }: { showCart: boolean }) => {
+const Cart = () => {
   const { cart } = useSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
 
@@ -33,16 +31,11 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
   const handleCheckout = () => {
     router.push('/checkout');
   };
-
+  
   return (
     <>
       <Toaster position='top-right' reverseOrder={false} />
-
-      <div
-        className={`overflow-y-hidden text-sm fixed z-10 transition-all ${
-          showCart ? 'left-0' : '-left-full'
-        } w-72 px-4 pb-4 h-screen bg-zinc-50 flex  flex-col gap-1 shadow-lg md:static md:shadow-none`}
-      >
+      <div className='text-sm w-80 px-4 pb-4 h-screen bg-zinc-50 hidden overflow-y-hidden flex-col gap-1 shadow-lg ml-[5rem] md:flex'>
         <div>
           <Image
             width={136}
@@ -63,15 +56,17 @@ const Cart = ({ showCart }: { showCart: boolean }) => {
               return (
                 <motion.li
                   className='flex mb-2 justify-between items-center  '
-                  key={item.id}
-                  initial={{ x: '-100%' , opacity: 0}}
+                  key={item.productId}
+                  initial={{ x: '-100%', opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: '-100%', opacity: 0 }}
                   transition={{ duration: 0.4 }}
                 >
                   <span className='font-semibold'>{item.name}</span>
                   <div className='flex items-center gap-1'>
-                    <span className='text-xs text-slate-500'>x {item.quantity}</span>
+                    <span className='text-xs text-slate-500'>
+                      x {item.quantity}
+                    </span>
                     <button
                       onClick={() => handleRemoveFromCart(item.productId)}
                       className='group'
