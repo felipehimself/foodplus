@@ -31,12 +31,12 @@ const MobileNavbar = () => {
 
         <div className='flex items-center gap-4'>
         <div className='flex justify-center h-[1.625rem]'>
-          {session && <button onClick={()=>dispatch(toggleShowCart(true))} className='md:hidden relative'>
+           <button onClick={()=>dispatch(toggleShowCart(true))} className='md:hidden relative'>
             <FaShoppingCart size={22} />
             {order.length > 0 && (
-              <span className='absolute top-0 -right-1 text-xs bg-yellow-400 p-1 rounded-full text-neutral-500'></span>
+              <span className='absolute top-0 -right-1 text-xs bg-accent-400 p-1 rounded-full text-neutral-500'></span>
             )}
-          </button>}
+          </button>
         </div>
 
           {status === 'loading' && (
