@@ -5,7 +5,6 @@ import { useSession, signOut } from 'next-auth/react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store/store';
 import { toggleShowCart } from '../features/showCartSlice';
-import { FaShoppingCart } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
 import { RiAdminFill, RiUserFill } from 'react-icons/ri';
 import { menuItems } from '../utils/menu';
@@ -28,15 +27,10 @@ const Sidebar = () => {
 
 
   return (
-    <nav className='bg-gradient-to-b from-primary-600 to-primary-500 w-16 md:w-20 fixed left-0 h-screen text-white flex flex-col justify-between  py-8 gap-6'>
+    <nav className='bg-gradient-to-b from-primary-600 to-primary-500 w-20 hidden fixed left-0 h-screen text-white md:flex flex-col justify-between  py-8 gap-6'>
       <div className='flex flex-col gap-12'>
-        <div className='flex justify-center h-[1.625rem]'>
-          <button onClick={handleShowCart} className='md:hidden relative'>
-            <FaShoppingCart size={22} />
-            {cartItems.length > 0 && (
-              <span className='absolute top-0 -right-1 text-xs bg-yellow-400 p-1 rounded-full text-neutral-500'></span>
-            )}
-          </button>
+        <div>
+          &nbsp;
         </div>
         <ul className='flex flex-col gap-6'>
           {menuItems.map((menuItem, index) => (
@@ -45,8 +39,8 @@ const Sidebar = () => {
                 className='flex flex-col justify-center items-center uppercase gap-2'
                 href={`/${menuItem.path}`}
               >
-                {menuItems[index]?.icon}
-                <span className='text-2xs md:text-xs'>{menuItem?.item}</span>
+                {menuItem.icon}
+                <span className='text-xs'>{menuItem?.item}</span>
               </Link>
               <span
                 className={`
