@@ -13,7 +13,7 @@ const Cart = ({
 }: ICartProps) => {
   return (
     <>
-      <div className='text-sm w-80 px-4 pb-4 h-screen bg-zinc-50 hidden overflow-y-hidden flex-col gap-1 shadow-lg ml-[5rem] md:flex'>
+      <div className='text-sm w-80 px-4 pb-4 h-screen bg-zinc-50 hidden overflow-y-hidden flex-col justify-between gap-1 shadow-lg ml-[5rem] md:flex'>
         <div>
           <Image
             width={136}
