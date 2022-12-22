@@ -38,7 +38,7 @@ const MobileCart = ({
               <h3 className='text-center text-lg  font-semibold'>
                 {cart.order.length !== 0 ? 'Your order' : 'Your cart is empty'}
               </h3>
-              <ul className='mt-2 overflow-x-hidden overflow-y-auto h-1/2'>
+              <ul className='mt-2 flex-1 overflow-x-hidden overflow-y-auto '>
                 <AnimatePresence initial={false}>
                   {cart.order.map((item) => {
                     return (
