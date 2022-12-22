@@ -7,9 +7,9 @@ import {
 } from 'react-icons/fa';
 
 export const menuItems = [
-  { item: 'sauces', icon: <FaWineBottle size={18} />, path: 'sauces' },
-  { item: 'veggies', icon: <FaCarrot size={18} />, path: 'veggies' },
-  { item: 'cheese', icon: <FaCheese size={15} />, path: 'cheese' },
-  { item: 'crunch', icon: <FaSeedling size={18} />, path: 'crunch' },
-  { item: 'extras', icon: <FaAppleAlt size={18} />, path: 'extras' },
+  { item: 'sauces', icon: <FaWineBottle color='#fff' size={18} />, path: 'sauces' },
+  { item: 'veggies', icon: <FaCarrot color='#fff' size={18} />, path: 'veggies' },
+  { item: 'cheese', icon: <FaCheese color='#fff' size={15} />, path: 'cheese' },
+  { item: 'crunch', icon: <FaSeedling color='#fff' size={18} />, path: 'crunch' },
+  { item: 'extras', icon: <FaAppleAlt color='#fff' size={18} />, path: 'extras' },
 ];
