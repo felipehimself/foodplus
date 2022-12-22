@@ -18,7 +18,7 @@ const MobileCart = ({
         {showCart && (
           <div
             onClick={handleCloseCart}
-            className='md:hidden flex backdrop-blur-[1px] bg-[rgba(0,0,0,0.2)] justify-center fixed inset-0 z-50'
+            className='md:hidden flex backdrop-blur-[1px] bg-[rgba(0,0,0,0.2)]  fixed inset-0 z-50'
           >
             <motion.div
               onClick={(e: Event) => e.stopPropagation()}
