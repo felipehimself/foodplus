@@ -28,7 +28,7 @@ const Cart = ({
         </div>
 
 
-        <ul className='mt-2 overflow-x-hidden overflow-y-auto h-1/2'>
+        <ul className='mt-2 overflow-x-hidden overflow-y-auto flex-1'>
           <AnimatePresence initial={false}>
             {cart.order.map((item) => {
               return (
