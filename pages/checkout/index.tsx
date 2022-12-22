@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import Button from '../../components/Button';
 import MainLayout from '../../layouts/MainLayout';
@@ -54,7 +53,6 @@ const Checkout = ({ userAddress }: { userAddress: IAddress }) => {
         <title>Checkout</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
-      {/* <Toaster position='top-center' reverseOrder={false} /> */}
       <section className='mx-auto w-full flex gap-4 flex-col items-start justify-center sm:flex-row mt-6 px-2 '>
         <div className=' w-full sm:w-5/12 md:w-4/12 p1 rounded-md bg-white shadow-md'>
           <div className='p-3 space-y-4'>
