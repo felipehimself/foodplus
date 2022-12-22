@@ -22,11 +22,11 @@ const Cart = ({
             alt='salad bowl'
             className='block mx-auto'
           />
-        </div>
-
-        <h3 className='text-center text-lg  font-semibold'>
+        <h3 className='text-center text-lg mt-1 font-semibold'>
           {cart.order.length !== 0 ? 'Your order' : 'Your cart is empty'}
         </h3>
+        </div>
+
 
         <ul className='mt-2 overflow-x-hidden overflow-y-auto h-1/2'>
           <AnimatePresence initial={false}>
