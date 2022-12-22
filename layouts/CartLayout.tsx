@@ -26,6 +26,7 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
 
   const handleCancel = () => {
     dispatch(cleanCart());
+    handleCloseCart()
     toast.success('Your cart was cleaned!');
   };
 
