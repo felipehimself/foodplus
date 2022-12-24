@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import { authOptions } from './api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth';
+import Head from 'next/head';
 
 const icons = {
   google: {
@@ -21,66 +22,82 @@ const icons = {
 };
 
 const callbackOptions = {
-  sauces:'/sauces',
-  veggies:'/veggies',
-  cheese:'/cheese',
-  crunch:'/crunch',
-  extras:'/extras',
-  checkout:'/checkout'
-}
+  sauces: '/sauces',
+  veggies: '/veggies',
+  cheese: '/cheese',
+  crunch: '/crunch',
+  extras: '/extras',
+  checkout: '/checkout',
+};
 
 const SignIn = ({ providers }: any) => {
-
-  const { query: { callback } } = useRouter();
-
-
+  const {
+    query: { callback },
+  } = useRouter();
 
   return (
-    <div className='mt-12 bg-white flex flex-col gap-6 justify-center items-center'>
-      <div className='rounded border p-6 space-y-3'>
-        <h1 className='text-lg text-center'>Sign in to continue</h1>
-        {Object.values(providers).map((provider: any) => (
-          <div
-            className={` ${icons[provider.id as keyof typeof icons]['bgColor']} 
+    <>
+      <Head>
+        <title>Sign-in</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
+      <div className='mt-12 bg-white flex flex-col gap-6 justify-center items-center'>
+        <div className='rounded border p-6 space-y-3'>
+          <h1 className='text-lg text-center'>Sign in to continue</h1>
+          {Object.values(providers).map((provider: any) => (
+            <div
+              className={` ${
+                icons[provider.id as keyof typeof icons]['bgColor']
+              } 
             ${
               icons[provider.id as keyof typeof icons]['txtColor']
             } px-6 py-2 border rounded-md shadow hover:shadow-md transition-all`}
-            key={provider.name}
-          >
-            <button
-              className='flex items-center gap-4'
-              onClick={() => signIn(provider.id, {callbackUrl:callbackOptions[callback as keyof typeof callbackOptions] || '/sauces'})}
-              
+              key={provider.name}
             >
-              {icons[provider.id as keyof typeof icons]['icon']}
-              Sign in with {provider.name}
-            </button>
-          </div>
-        ))}
+              <button
+                className='flex items-center gap-4'
+                onClick={() =>
+                  signIn(provider.id, {
+                    callbackUrl:
+                      callbackOptions[
+                        callback as keyof typeof callbackOptions
+                      ] || '/sauces',
+                  })
+                }
+              >
+                {icons[provider.id as keyof typeof icons]['icon']}
+                Sign in with {provider.name}
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
-}
+};
 
-SignIn.PageLayout = MainLayout
+SignIn.PageLayout = MainLayout;
 
-export default SignIn
+export default SignIn;
 
 export async function getServerSideProps(context: any) {
-  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-    if (session) {
-      return {
-        redirect: {
-          destination: '/sauces',
-          permanent: false
-        },
-      };
-    }
-  
+  if (session) {
+    return {
+      redirect: {
+        destination: '/sauces',
+        permanent: false,
+      },
+    };
+  }
+
   const providers = await getProviders();
-   
-  
+
   return {
     props: { providers },
   };
