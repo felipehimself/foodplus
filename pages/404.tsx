@@ -23,7 +23,7 @@ const ErrorPage = () => {
           alt='Image showing a 404 error'
         />
         <Link
-          href='/sauces'
+          href='/'
           className='bg-primary-500 text-white rounded-md py-2 px-4 hover:bg-primary-600 transition-all'
         >
           Go Home
