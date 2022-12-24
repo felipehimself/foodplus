@@ -157,7 +157,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: '/sauces',
+        destination: '/signin?callback=checkout',
       },
     };
   }
