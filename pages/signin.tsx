@@ -25,7 +25,8 @@ const callbackOptions = {
   veggies:'/veggies',
   cheese:'/cheese',
   crunch:'/crunch',
-  extras:'/extras'
+  extras:'/extras',
+  checkout:'/checkout'
 }
 
 const SignIn = ({ providers }: any) => {
