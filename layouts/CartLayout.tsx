@@ -10,7 +10,6 @@ import { useRouter } from 'next/router';
 import { cleanCart, removeFromCart } from '../features/cartSlice';
 import { toast } from 'react-hot-toast';
 import { toggleShowCart } from '../features/showCartSlice';
-import { Scrollbars } from 'react-custom-scrollbars-2';
 import ProductContainer from '../components/ProductContainer';
 
 export const CartLayout = ({ children }: { children: React.ReactNode }) => {
@@ -58,9 +57,7 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
           handleCheckout={handleCheckout}
         />
         <div className='w-full h-screen overflow-y-auto py-2 px-6'>
-          <Scrollbars>
-            <ProductContainer>{children}</ProductContainer>
-          </Scrollbars>
+          <ProductContainer>{children}</ProductContainer>
         </div>
       </div>
     </>
