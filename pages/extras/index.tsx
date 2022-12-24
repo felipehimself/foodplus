@@ -13,11 +13,10 @@ const Extras = ({ extras }: { extras: IProduct[] }) => {
         <title>Extras</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
-      <ProductContainer>
-        {extras.map((extra) => (
-          <CardProduct key={extra.id} {...extra} />
-        ))}
-      </ProductContainer>
+
+      {extras.map((extra) => (
+        <CardProduct key={extra.id} {...extra} />
+      ))}
     </>
   );
 };
