@@ -28,7 +28,7 @@ const Cart = ({
         </h3>
         </div>
 
-        <Scrollbars>
+      {cart.order.length !== 0 && (<Scrollbars>
           <ul className='mt-2 px-3 overflow-x-hidden  flex-1'>
             <AnimatePresence initial={false}>
               {cart.order.map((item) => {
@@ -62,7 +62,10 @@ const Cart = ({
             
             </AnimatePresence>
           </ul>
-        </Scrollbars>
+        </Scrollbars>) 
+      
+      }
+        
         <AnimatePresence initial={false}>
           {cart.order.length !== 0 && (
             <>
