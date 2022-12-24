@@ -28,9 +28,8 @@ const Cart = ({
         </h3>
         </div>
 
-
         <Scrollbars>
-          <ul className='mt-2 px-3 overflow-x-hidden overflow-y-auto flex-1'>
+          <ul className='mt-2 px-3 overflow-x-hidden  flex-1'>
             <AnimatePresence initial={false}>
               {cart.order.map((item) => {
                 return (
@@ -60,6 +59,7 @@ const Cart = ({
                   </motion.li>
                 );
               })}
+            
             </AnimatePresence>
           </ul>
         </Scrollbars>
