@@ -11,6 +11,7 @@ import { cleanCart, removeFromCart } from '../features/cartSlice';
 import { toast } from 'react-hot-toast';
 import { toggleShowCart } from '../features/showCartSlice';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import ProductContainer from '../components/ProductContainer';
 
 export const CartLayout = ({ children }: { children: React.ReactNode }) => {
   const { showCart } = useSelector((state: RootState) => state.showCart);
@@ -27,7 +28,7 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
 
   const handleCancel = () => {
     dispatch(cleanCart());
-    handleCloseCart()
+    handleCloseCart();
     toast.success('Your cart was cleaned!');
   };
 
@@ -57,7 +58,9 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
           handleCheckout={handleCheckout}
         />
         <div className='w-full h-screen overflow-y-auto py-2 px-6'>
-          <Scrollbars>{children}</Scrollbars>
+          <Scrollbars>
+            <ProductContainer>{children}</ProductContainer>
+          </Scrollbars>
         </div>
       </div>
     </>
