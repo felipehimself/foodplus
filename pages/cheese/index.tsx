@@ -1,14 +1,20 @@
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import CardProduct from '../../components/CardProduct';
+import { IProduct } from '../../interfaces/Product';
 import { CartLayout } from '../../layouts/CartLayout';
+import client from '../../lib/prismadb';
 
-const Cheese = () => {
+const Cheese = ({ cheese }: { cheese: IProduct[] }) => {
   return (
     <>
       <Head>
         <title>Cheese</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
       </Head>
-      <div>Cheese</div>
+      {cheese?.map((item) => (
+        <CardProduct key={item.id} {...item} />
+      ))}
     </>
   );
 };
@@ -16,3 +22,17 @@ const Cheese = () => {
 Cheese.PageLayout = CartLayout;
 
 export default Cheese;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const cheese = await client.product.findMany({
+    where: {
+      category: 'cheese',
+    },
+  });
+
+  return {
+    props: {
+      cheese,
+    },
+  };
+};
