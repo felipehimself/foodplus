@@ -4,7 +4,7 @@ const { motion, AnimatePresence } = require('framer-motion');
 import { ICartProps } from '../interfaces/Props';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
-import { cartModalVariants, cardContentVariants } from '../lib/framer';
+import { cartModalVariants, cardContentVariants, listItemVarians } from '../lib/framer';
 
 const MobileCart = ({
   cart,
@@ -45,10 +45,10 @@ const MobileCart = ({
                         <motion.li
                           className='flex mb-2 justify-between items-center  '
                           key={item.productId}
-                          initial={{ x: '-100%', opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          exit={{ x: '-100%', opacity: 0 }}
-                          transition={{ duration: 0.4 }}
+                          variants={listItemVarians}
+                          initial='hidden'
+                          animate='visible'
+                          exit='exit'
                         >
                           <span className='font-semibold'>{item.name}</span>
                           <div className='flex items-center gap-1'>
