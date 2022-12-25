@@ -5,6 +5,7 @@ import { MdClose } from 'react-icons/md';
 const { motion, AnimatePresence } = require('framer-motion');
 import { ICartProps } from '../interfaces/Props';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { listItemVarians } from '../lib/framer';
 
 const Cart = ({
   cart,
@@ -30,16 +31,16 @@ const Cart = ({
 
       {cart.order.length !== 0 && (<Scrollbars>
           <ul className='mt-2 px-3 overflow-x-hidden  flex-1'>
-            <AnimatePresence initial={false}>
+            <AnimatePresence >
               {cart.order.map((item) => {
                 return (
                   <motion.li
                     className='flex mb-2 justify-between items-center  '
                     key={item.productId}
-                    initial={{ x: '-100%', opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: '-100%', opacity: 0 }}
-                    transition={{ duration: 0.4 }}
+                    variants={listItemVarians}
+                    initial='hidden'
+                    animate='visible'
+                    exit='exit'
                   >
                     <span className='font-semibold'>{item.name}</span>
                     <div className='flex items-center gap-1'>
