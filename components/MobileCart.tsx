@@ -4,6 +4,7 @@ const { motion, AnimatePresence } = require('framer-motion');
 import { ICartProps } from '../interfaces/Props';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
+import { cartModalVariants, cardContentVariants } from '../lib/framer';
 
 const MobileCart = ({
   cart,
@@ -17,21 +18,18 @@ const MobileCart = ({
     <>
       <AnimatePresence>
         {showCart && (
-          <div
+          <motion.div
             onClick={handleCloseCart}
-            className='md:hidden flex backdrop-blur-[1px] bg-[rgba(0,0,0,0.2)]  fixed inset-0 z-50'
+            className='md:hidden flex backdrop-blur-[1px] bg-[rgba(0,0,0,0.2)] fixed inset-0 z-50'
+            variants={cartModalVariants}
+            initial='hidden'
+            animate='visible'
+            exit='exit'
           >
             <motion.div
               onClick={(e: Event) => e.stopPropagation()}
-              initial={{ y: '100%', opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: '100%', opacity: 0 }}
-              transition={{ type: 'tween' }}
-              className='
-                    text-sm z-50 p-4 h-5/6 w-full mx-auto fixed bottom-0
-                    bg-zinc-50 flex flex-col gap-1 shadow-lg rounded-t-xl
-                    
-                    '
+              variants={cardContentVariants}
+              className='text-sm z-50 p-4 h-5/6 w-full mx-auto fixed bottom-0 bg-zinc-50 flex flex-col gap-1 shadow-lg rounded-t-xl'
             >
               <button onClick={handleCloseCart} className='self-end p-1'>
                 <MdClose size={20} />
@@ -58,7 +56,9 @@ const MobileCart = ({
                               x {item.quantity}
                             </span>
                             <button
-                              onClick={() => handleRemoveFromCart(item.productId)}
+                              onClick={() =>
+                                handleRemoveFromCart(item.productId)
+                              }
                               className='group'
                             >
                               <MdClose
@@ -102,7 +102,7 @@ const MobileCart = ({
                 )}
               </AnimatePresence>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
