@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import { useSelector } from 'react-redux';
 import Cart from '../components/Cart';
 import { RootState, useAppDispatch } from '../store/store';
 import Sidebar from '../components/Sidebar';
 import MobileTab from '../components/MobileTab';
 import MobileNavbar from '../components/MobileNavbar';
-import MobileCart from '../components/MobileCart';
+// import MobileCart from '../components/MobileCart';
 import { useRouter } from 'next/router';
 import { cleanCart, removeFromCart } from '../features/cartSlice';
 import { toast } from 'react-hot-toast';
 import { toggleShowCart } from '../features/showCartSlice';
 import ProductContainer from '../components/ProductContainer';
+
+const MobileCart = lazy(()=> import('../components/MobileCart'))
 
 export const CartLayout = ({ children }: { children: React.ReactNode }) => {
   const { showCart } = useSelector((state: RootState) => state.showCart);
