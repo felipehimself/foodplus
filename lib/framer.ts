@@ -4,30 +4,23 @@ export const cartModalVariants = {
   },
   visible: {
     opacity: 1,
-    transition: {
-      duration: 0.2,
-      when: 'beforeChildren',
-    },
   },
   exit: {
     opacity: 0,
   },
 };
 
-export const cardContentVariants = {
+export const cartContentVariants = {
   hidden: {
-    opacity: 0,
     y: '100%',
   },
   visible: {
-    opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
+      type: 'tween',
     },
   },
   exit: {
-    opacity: 0,
     y: '100%',
   },
 };
