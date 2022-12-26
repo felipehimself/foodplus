@@ -1,39 +1,15 @@
-import { getProviders, signIn, useSession } from 'next-auth/react';
-import { FcGoogle } from 'react-icons/fc';
-import { BsGithub } from 'react-icons/bs';
+import { ClientSafeProvider, getProviders, LiteralUnion, signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import { authOptions } from './api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth';
 import Head from 'next/head';
+import { GetServerSideProps } from 'next';
+import { signinIcons, callbackOptions } from '../utils/menu';
+import { BuiltInProviderType } from 'next-auth/providers';
 
-const icons = {
-  google: {
-    icon: <FcGoogle size={20} />,
-    bgColor: 'bg-white',
-    txtColor: 'text-neutral-600',
-  },
-  github: {
-    icon: <BsGithub size={20} />,
-    bgColor: 'bg-black',
-    txtColor: 'text-white',
-  },
-};
-
-const callbackOptions = {
-  sauces: '/sauces',
-  veggies: '/veggies',
-  cheese: '/cheese',
-  crunch: '/crunch',
-  extras: '/extras',
-  checkout: '/checkout',
-};
-
-const SignIn = ({ providers }: any) => {
-  const {
-    query: { callback },
-  } = useRouter();
+const SignIn = ({ providers }: {providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> }) => {
+  const { query: { callback } } = useRouter();
 
   return (
     <>
@@ -47,10 +23,10 @@ const SignIn = ({ providers }: any) => {
           {Object.values(providers).map((provider: any) => (
             <div
               className={` ${
-                icons[provider.id as keyof typeof icons]['bgColor']
+                signinIcons[provider.id as keyof typeof signinIcons]['bgColor']
               } 
             ${
-              icons[provider.id as keyof typeof icons]['txtColor']
+              signinIcons[provider.id as keyof typeof signinIcons]['txtColor']
             } px-6 py-2 border rounded-md shadow hover:shadow-md transition-all`}
               key={provider.name}
             >
@@ -65,7 +41,7 @@ const SignIn = ({ providers }: any) => {
                   })
                 }
               >
-                {icons[provider.id as keyof typeof icons]['icon']}
+                {signinIcons[provider.id as keyof typeof signinIcons]['icon']}
                 Sign in with {provider.name}
               </button>
             </div>
@@ -80,7 +56,7 @@ SignIn.PageLayout = MainLayout;
 
 export default SignIn;
 
-export async function getServerSideProps(context: any) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -88,6 +64,7 @@ export async function getServerSideProps(context: any) {
   );
 
   if (session) {
+    
     return {
       redirect: {
         destination: '/sauces',
@@ -101,4 +78,4 @@ export async function getServerSideProps(context: any) {
   return {
     props: { providers },
   };
-}
+};
