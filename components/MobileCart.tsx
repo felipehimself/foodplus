@@ -4,7 +4,11 @@ const { motion, AnimatePresence } = require('framer-motion');
 import { ICartProps } from '../interfaces/Props';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
-import { cartModalVariants, cardContentVariants, listItemVarians } from '../lib/framer';
+import {
+  cartModalVariants,
+  cartContentVariants,
+  listItemVarians,
+} from '../lib/framer';
 
 const MobileCart = ({
   cart,
@@ -28,7 +32,7 @@ const MobileCart = ({
           >
             <motion.div
               onClick={(e: Event) => e.stopPropagation()}
-              variants={cardContentVariants}
+              variants={cartContentVariants}
               className='text-sm z-50 p-4 h-5/6 w-full mx-auto fixed bottom-0 bg-zinc-50 flex flex-col gap-1 shadow-lg rounded-t-xl'
             >
               <button onClick={handleCloseCart} className='self-end p-1'>
