@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import { IProduct } from '../../interfaces/Product';
 import CardProduct from '../../components/CardProduct';
 import client from '../../lib/prismadb';
-import { CartLayout } from '../../layouts/CartLayout';
+import  CartLayout  from '../../layouts/CartLayout';
 import Head from 'next/head';
 
 const Veggie = ({ veggies }: { veggies: IProduct[] }) => {
