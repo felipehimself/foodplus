@@ -34,7 +34,7 @@ const CardProduct = ({
         className='p-4 rounded-md bg-white shadow-md hover:shadow-lg transition-all relative flex items-center justify-between w-52 h-40'
         key={id}
       >
-        <span className='text-2xs rounded-sm hidden md:flex items-center justify-center  bg-accent-400 text-white w-11 h-6 absolute -top-3 -right-2 shadow-md'>
+        <span className='text-2xs rounded hidden md:flex items-center justify-center  bg-accent-400 text-white w-11 h-6 absolute -top-3 -right-2 shadow-md'>
           $ {price.toFixed(2)}
         </span>
         <div>
