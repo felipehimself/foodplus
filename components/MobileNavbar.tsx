@@ -8,6 +8,7 @@ import { RootState, useAppDispatch } from '../store/store';
 import { toggleShowCart } from '../features/showCartSlice';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { IoMdHome } from 'react-icons/io';
 const MobileNavbar = () => {
   const { back, asPath, pathname } = useRouter();
   const { data: session, status } = useSession();
@@ -16,7 +17,7 @@ const MobileNavbar = () => {
 
   const dispatch = useAppDispatch();
 
-  const {order} = useSelector((state:RootState)=> state.cart)
+  const { order } = useSelector((state: RootState) => state.cart);
 
   return (
     <header className='bg-primary-500 py-1 sticky top-0 z-40 md:hidden'>
@@ -30,14 +31,20 @@ const MobileNavbar = () => {
         </Link>
 
         <div className='flex items-center gap-4'>
-        <div className='flex justify-center h-[1.625rem]'>
-           <button onClick={()=>dispatch(toggleShowCart(true))} className='md:hidden relative'>
-            <FaShoppingCart size={22} />
-            {order.length > 0 && (
-              <span className='absolute top-0 -right-1 text-xs bg-accent-400 p-1 rounded-full text-neutral-500'></span>
-            )}
-          </button>
-        </div>
+          <Link href='/' className='flex flex-col justify-center items-center'>
+            <IoMdHome size={26} />
+          </Link>
+          <div className='flex justify-center h-[1.625rem]'>
+            <button
+              onClick={() => dispatch(toggleShowCart(true))}
+              className='md:hidden relative'
+            >
+              <FaShoppingCart size={22} />
+              {order.length > 0 && (
+                <span className='absolute top-0 -right-1 text-xs bg-accent-400 p-1 rounded-full text-neutral-500'></span>
+              )}
+            </button>
+          </div>
 
           {status === 'loading' && (
             <LoadingIcons.Circles height={24} width={24} />
