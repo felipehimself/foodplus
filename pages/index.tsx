@@ -1,11 +1,10 @@
-import { CartLayout } from '../layouts/CartLayout';
+import HomeLayout from '../layouts/HomeLayout';
 import welcome from './../public/welcome-home-webp.webp';
-
 import Image from 'next/image';
 
 const Home = () => {
   return (
-    <div className='mx-auto md:mt-4 flex flex-col gap-5 justify-center items-center'>
+    <div className='mx-auto pt-5 md:h-screen md:pt-0 flex flex-col gap-5 justify-center items-center'>
       <h2 className='text-2xl'>Welcome to FoodPlus</h2>
       <div>
         <Image src={welcome} width={400} height={400} alt='Welcome image' />
@@ -19,6 +18,6 @@ const Home = () => {
   );
 };
 
-Home.PageLayout = CartLayout;
+Home.PageLayout = HomeLayout;
 
 export default Home;
