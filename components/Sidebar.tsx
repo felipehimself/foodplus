@@ -2,45 +2,35 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../store/store';
-import { toggleShowCart } from '../features/showCartSlice';
 import { IoLogOut } from 'react-icons/io5';
 import { RiAdminFill, RiUserFill } from 'react-icons/ri';
+import { IoMdHome } from 'react-icons/io';
 import { menuItems } from '../utils/menu';
-import LoadingIcons from 'react-loading-icons'
+import LoadingIcons from 'react-loading-icons';
 
 const Sidebar = () => {
-  const router = useRouter();
-  const { pathname } = router;
+  const { pathname } = useRouter();
 
   const { data: session, status } = useSession();
-  
-  const dispatch = useAppDispatch();
-  const cartItems = useSelector((state: RootState) => state.cart.order);
-  
-  const callback = pathname.substring(1)
 
-  const handleShowCart = () => {
-    dispatch(toggleShowCart(true));
-  };
-
+  const callback = pathname.substring(1);
 
   return (
     <nav className='bg-gradient-to-b from-primary-600 to-primary-500 w-20 hidden fixed left-0 h-screen text-white md:flex flex-col justify-between  py-8 gap-6'>
-      <div className='flex flex-col gap-12'>
-        <div>
-          &nbsp;
-        </div>
-        <ul className='flex flex-col gap-6'>
-          {menuItems.map((menuItem, index) => (
+        <Link href='/' className='flex flex-col justify-center items-center'>
+          <IoMdHome size={26} />
+          <span className='text-sm'>Home</span>
+        </Link>
+      
+        <ul className='flex flex-col gap-5'>
+          {menuItems.map((menuItem) => (
             <li key={menuItem.item} className='relative overflow-hidden'>
               <Link
-                className='flex flex-col justify-center items-center uppercase gap-2'
+                className='flex flex-col justify-center items-center capitalize gap-1'
                 href={`/${menuItem.path}`}
               >
                 {menuItem.icon}
-                <span className='text-xs'>{menuItem?.item}</span>
+                <span className='text-sm'>{menuItem?.item}</span>
               </Link>
               <span
                 className={`
@@ -56,7 +46,7 @@ const Sidebar = () => {
                 border-l-0
                 transition-all
                 ${
-                  router.pathname.includes(menuItem.path)
+                  pathname.includes(menuItem.path)
                     ? 'opacity-100'
                     : 'opacity-0'
                 }
@@ -65,49 +55,48 @@ const Sidebar = () => {
             </li>
           ))}
         </ul>
-      </div>
+      
 
       <div className='flex flex-col items-center space-y-4'>
+        {status === 'loading' && (
+          <LoadingIcons.Circles height={24} width={24} />
+        )}
 
-         {status === 'loading' && <LoadingIcons.Circles height={24} width={24} />}
-        
-          {(session && (
-            <>
-              {session?.user.role === 'admin' ? (
-                <Link
-                  href='/admin'
-                  className='flex flex-col items-center gap-1'
-                >
-                  <RiAdminFill size={24} />
-                  <span className='text-xs'>Admin</span>
-                </Link>
-              ) : (
-                <Link
-                  href='/account'
-                  className='flex flex-col items-center gap-1'
-                >
-                  <RiUserFill size={24} />
-                  <span className='text-xs'>Account</span>
-                </Link>
-              )}
-              <button onClick={() => signOut()} className='mx-auto flex flex-col items-center gap-1'>
-                <IoLogOut size={24} />
-                  <span className='text-xs'>Logout</span>
-              </button>
-            </>
-          ))}
-
-           {(status !== 'loading') && !session &&
-           
-            <Link
-              href={`/signin?callback=${callback}`}
-              className='flex flex-col items-center gap-1'
+        {session && (
+          <>
+            {session?.user.role === 'admin' ? (
+              <Link href='/admin' className='flex flex-col items-center gap-1'>
+                <RiAdminFill size={24} />
+                <span className='text-sm'>Admin</span>
+              </Link>
+            ) : (
+              <Link
+                href='/account'
+                className='flex flex-col items-center gap-1'
+              >
+                <RiUserFill size={24} />
+                <span className='text-sm'>Account</span>
+              </Link>
+            )}
+            <button
+              onClick={() => signOut()}
+              className='mx-auto flex flex-col items-center gap-1'
             >
-              <RiUserFill size={24} />
-              <span className='text-xs'>Login</span>
-            </Link>
-          
-           }
+              <IoLogOut size={24} />
+              <span className='text-sm'>Logout</span>
+            </button>
+          </>
+        )}
+
+        {status !== 'loading' && !session && (
+          <Link
+            href={`/signin?callback=${callback}`}
+            className='flex flex-col items-center gap-1'
+          >
+            <RiUserFill size={24} />
+            <span className='text-sm'>Login</span>
+          </Link>
+        )}
       </div>
     </nav>
   );
