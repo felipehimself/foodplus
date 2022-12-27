@@ -65,14 +65,14 @@ const Sidebar = () => {
         {session && (
           <>
             {session?.user.role === 'admin' ? (
-              <Link href='/admin' className='flex flex-col items-center gap-1'>
+              <Link href='/admin' className='flex flex-col items-center '>
                 <RiAdminFill size={24} />
                 <span className='text-sm'>Admin</span>
               </Link>
             ) : (
               <Link
                 href='/account'
-                className='flex flex-col items-center gap-1'
+                className='flex flex-col items-center '
               >
                 <RiUserFill size={24} />
                 <span className='text-sm'>Account</span>
@@ -80,7 +80,7 @@ const Sidebar = () => {
             )}
             <button
               onClick={() => signOut()}
-              className='mx-auto flex flex-col items-center gap-1'
+              className='mx-auto flex flex-col items-center'
             >
               <IoLogOut size={24} />
               <span className='text-sm'>Logout</span>
@@ -91,7 +91,7 @@ const Sidebar = () => {
         {status !== 'loading' && !session && (
           <Link
             href={`/signin?callback=${callback}`}
-            className='flex flex-col items-center gap-1'
+            className='flex flex-col items-center '
           >
             <RiUserFill size={24} />
             <span className='text-sm'>Login</span>
