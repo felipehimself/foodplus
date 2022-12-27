@@ -5,7 +5,7 @@ const ProductContainer = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   return (
-    <section className='mt-6'>
+    <section className='mt-6 pb-20'>
       {router.pathname !== '/' && (
         <h1 className='text-xl text-center md:text-start font-semibold text-neutral-700 mb-8'>
           Customize
