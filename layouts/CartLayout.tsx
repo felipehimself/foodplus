@@ -12,7 +12,7 @@ import { toast } from 'react-hot-toast';
 import { toggleShowCart } from '../features/showCartSlice';
 import ProductContainer from '../components/ProductContainer';
 
-export const CartLayout = ({ children }: { children: React.ReactNode }) => {
+const CartLayout = ({ children }: { children: React.ReactNode }) => {
   const { showCart } = useSelector((state: RootState) => state.showCart);
 
   const { cart } = useSelector((state: RootState) => state);
@@ -63,3 +63,5 @@ export const CartLayout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
+
+export default CartLayout
