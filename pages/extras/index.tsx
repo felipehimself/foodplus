@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next';
 import CardProduct from '../../components/CardProduct';
-import ProductContainer from '../../components/ProductContainer';
 import client from '../../lib/prismadb';
 import { IProduct } from '../../interfaces/Product';
 import  CartLayout  from '../../layouts/CartLayout';

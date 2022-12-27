@@ -1,4 +1,4 @@
-import { ClientSafeProvider, getProviders, LiteralUnion, signIn, useSession } from 'next-auth/react';
+import { ClientSafeProvider, getProviders, LiteralUnion, signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import MainLayout from '../layouts/MainLayout';
 import { authOptions } from './api/auth/[...nextauth]';
