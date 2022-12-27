@@ -35,13 +35,13 @@ export const menuItems = [
 export const signinIcons = {
   google: {
     icon: <FcGoogle size={20} />,
-    bgColor: 'bg-white',
-    txtColor: 'text-neutral-600',
+    bgColor: '#fff',
+    txtColor: '#525252',
   },
   github: {
     icon: <BsGithub size={20} />,
-    bgColor: 'bg-black',
-    txtColor: 'text-white',
+    bgColor: '#000',
+    txtColor: '#fff',
   },
 };
 
