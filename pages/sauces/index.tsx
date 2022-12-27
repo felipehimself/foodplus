@@ -27,7 +27,7 @@ export default Sauces;
 export const getServerSideProps: GetServerSideProps = async () => {
   const sauces = await client.product.findMany({
     where: {
-      category: 'sauces',
+      category: 'sauce',
     },
   });
 
