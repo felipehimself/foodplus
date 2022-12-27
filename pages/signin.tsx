@@ -1,4 +1,9 @@
-import { ClientSafeProvider, getProviders, LiteralUnion, signIn } from 'next-auth/react';
+import {
+  ClientSafeProvider,
+  getProviders,
+  LiteralUnion,
+  signIn,
+} from 'next-auth/react';
 import { useRouter } from 'next/router';
 import MainLayout from '../layouts/MainLayout';
 import { authOptions } from './api/auth/[...nextauth]';
@@ -8,8 +13,17 @@ import { GetServerSideProps } from 'next';
 import { signinIcons, callbackOptions } from '../utils/menu';
 import { BuiltInProviderType } from 'next-auth/providers';
 
-const SignIn = ({ providers }: {providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> }) => {
-  const { query: { callback } } = useRouter();
+const SignIn = ({
+  providers,
+}: {
+  providers: Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  >;
+}) => {
+  const {
+    query: { callback },
+  } = useRouter();
 
   return (
     <>
@@ -22,12 +36,17 @@ const SignIn = ({ providers }: {providers: Record<LiteralUnion<BuiltInProviderTy
           <h1 className='text-lg text-center'>Sign in to continue</h1>
           {Object.values(providers).map((provider: any) => (
             <div
-              className={` ${
-                signinIcons[provider.id as keyof typeof signinIcons]['bgColor']
-              } 
-            ${
-              signinIcons[provider.id as keyof typeof signinIcons]['txtColor']
-            } px-6 py-2 border rounded-md shadow hover:shadow-md transition-all`}
+              style={{
+                backgroundColor:
+                  signinIcons[provider.id as keyof typeof signinIcons][
+                    'bgColor'
+                  ],
+                color:
+                  signinIcons[provider.id as keyof typeof signinIcons][
+                    'txtColor'
+                  ],
+              }}
+              className='px-6 py-2 border rounded-md shadow hover:shadow-md transition-all'
               key={provider.name}
             >
               <button
@@ -64,7 +83,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 
   if (session) {
-    
     return {
       redirect: {
         destination: '/sauces',
